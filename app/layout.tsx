@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
+
+const notoSansKr = Noto_Sans_KR({
+  subsets: ['latin'],
+  weight: ['400', '500', '700', '900'], // 얇은 글씨부터 아주 두꺼운 글씨까지
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,11 +28,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="ko" className="scroll-smooth">
+      {/* 3. body 태그에 폰트 클래스를 적용합니다. 이제 사이트 전체가 이 폰트로 바뀝니다! */}
+      <body className={`${notoSansKr.className} antialiased text-gray-800`}>
+        {children}
+      </body>
     </html>
   );
 }

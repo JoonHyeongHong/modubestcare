@@ -2,6 +2,10 @@ import {fetchAPI} from '../lib/api';
 import ContactForm from '../components/ContactForm';
 import QuoteCalculator from '../components/QuoteCalculator';
 import Navbar from '../components/Navbar';
+import KakaoButton from '@/components/KakaoButton';
+import FaqAccordion from '@/components/FaqAccordion';
+import ProcessTabs from '@/components/ProcessTabs';
+import BeforeAfterSlider from '@/components/BeforeAfterSlider';
 
 const GET_PORTFOLIOS_QUERY = `
   query GetPortfolios {
@@ -43,23 +47,23 @@ export default async function Home() {
       <Navbar />
 
       {/* 1. 헤더 섹션 (id="hero") */}
-      <section id="hero" className="bg-blue-600 text-white py-16 md:py-24 px-8 scroll-mt-16 overflow-hidden">
+      <section id="hero" className="bg-[#0F172A] text-white py-16 md:py-24 px-8 scroll-mt-16 overflow-hidden">
   <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
     
     {/* 왼쪽: 텍스트 카피 */}
     <div className="flex-1 text-center md:text-left z-10">
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight break-keep">
         호흡기를 위협하는 곰팡이,<br />
-        <span className="text-yellow-300">완전 분해 세척</span>이 답입니다.
+        <span className="text-[#FBBF24]">완전 분해 세척</span>이 답입니다.
       </h1>
       <p className="text-xl md:text-2xl opacity-90 mb-8 break-keep">
         인천 서구/김포 지역 관공서, 상가, 사무실 대량 세척 전문
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-        <a href="#calculator" className="bg-white text-blue-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition shadow-lg text-center">
+        <a href="#calculator" className="bg-white text-[#2563EB] px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition shadow-lg text-center">
           예상 견적 확인
         </a>
-        <a href="#contact" className="bg-blue-800 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-900 transition shadow-lg text-center border border-blue-500">
+        <a href="#contact" className="bg-[#2563EB] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-[#1D4ED8] transition shadow-lg text-center border border-[#2563EB]">
           무료 방문 견적
         </a>
       </div>
@@ -82,6 +86,15 @@ export default async function Home() {
 
   </div>
 </section>
+
+<section id="before-after" className="bg-white py-10">
+      <BeforeAfterSlider />
+    </section>
+
+{/* 2. 세척 프로세스 탭 섹션 (id="process") */}
+      <section id="process" className="px-8 mt-12 scroll-mt-24">
+        <ProcessTabs />
+      </section>
 
       {/* 2. 견적 계산기 섹션 (id="calculator") */}
       <section id="calculator" className="px-8 mt-12 scroll-mt-24">
@@ -112,11 +125,19 @@ export default async function Home() {
         </div>
       </section>
       
-      {/* 5. 간단한 푸터(바닥글) */}
+      {/* 5. FAQ 섹션 (id="faq") */}
+      <section id="faq" className="px-8 mt-12 scroll-mt-24">
+        <FaqAccordion />
+      </section>
+
+      {/* 6. 간단한 푸터(바닥글) */}
       <footer className="bg-gray-800 text-gray-400 text-center py-8 mt-20">
         <p>© 2026 모두베스트케어. All rights reserved.</p>
         <p className="text-sm mt-2"> 에어컨 세척 전문 업체 | 대표번호: 010-0000-0000</p>
       </footer>
+
+      {/* 7. 카카오톡 상담 버튼 */}
+      <KakaoButton />
     </main>
   );
 }
