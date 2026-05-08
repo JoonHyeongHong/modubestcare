@@ -118,7 +118,7 @@ export default async function Home() {
         </div>
         
         <div className="grid gap-6 md:grid-cols-2">
-          {portfolios?.map((item, index) => (
+          {/* {portfolios?.map((item, index) => (
             <div key={index} className="bg-white p-6 border border-gray-200 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300">
               <h3 className="text-xl font-bold mb-4 text-gray-800">{item.title}</h3>
               <div 
@@ -126,7 +126,7 @@ export default async function Home() {
                 dangerouslySetInnerHTML={{ __html: item.content }} 
               />
             </div>
-          ))}
+          ))} */}
         </div>
       </section>
       
