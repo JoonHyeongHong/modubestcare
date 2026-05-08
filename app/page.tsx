@@ -36,10 +36,12 @@ portfolios: {
 
 export default async function Home() {
   //fetchAPI의 결과값이 PortfoliosData 타입이라고 지정해줍니다.
-  const data: PortfoliosData = await fetchAPI(GET_PORTFOLIOS_QUERY);
-  const portfolios = data?.portfolios?.nodes || [];
+  //const data: PortfoliosData = await fetchAPI(GET_PORTFOLIOS_QUERY);
+  //const portfolios = data?.portfolios?.nodes || [];
 
 
+  const portfolios: any[] = []; 
+  const posts: any[] = [];
   
 
   return (
