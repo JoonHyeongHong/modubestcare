@@ -36,9 +36,13 @@ portfolios: {
 
 export default async function Home() {
   //fetchAPI의 결과값이 PortfoliosData 타입이라고 지정해줍니다.
-  const data: PortfoliosData = await fetchAPI(GET_PORTFOLIOS_QUERY);
-  const portfolios = data?.portfolios?.nodes || [];
+  // ❌ 기존 코드 (Vercel에서 에러를 내는 주범)
+// const posts = await fetchAPI('...'); 
+// const portfolioData = await getPortfolio(); 
 
+// ✅ 수정 코드 (위 코드 앞에 // 를 붙여 주석 처리하고, 아래처럼 빈 데이터를 넣으세요)
+const posts = []; 
+const portfolioData = [];
   return (
     <main className="min-h-screen bg-gray-50 pt-16"> 
       {/* pt-16: 네비게이션 바 높이만큼 메인 콘텐츠를 아래로 밀어줍니다 */}
