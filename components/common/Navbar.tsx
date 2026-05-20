@@ -8,6 +8,9 @@ interface NavbarProps {
   setViewMode : (mode:'b2b' | 'edu') => void;
 }
 
+
+
+
 const menuConfig = {
   b2b: [
     { name: "서비스 소개", id: "hero" },
@@ -32,6 +35,16 @@ export default function Navbar({ viewMode, setViewMode }: NavbarProps) {
   // 현재 모드에 따른 브랜드 테마 색상 정의
   const themeColor = viewMode === 'b2b' ? 'text-blue-600' : 'text-emerald-600';
   const themeBg = viewMode === 'b2b' ? 'bg-blue-600' : 'bg-emerald-600';
+
+
+  const handleModeChange = (mode: 'b2b' | 'edu') => {
+  setViewMode(mode);
+  // 모드가 바뀐 직후 브라우저 스크롤을 최상단으로 강제 이동
+  if (typeof window !== 'undefined') {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+  setIsOpen(false); // 모바일 드로어 닫기
+};
 
   return (
     <>
@@ -88,7 +101,7 @@ export default function Navbar({ viewMode, setViewMode }: NavbarProps) {
 
               {/* B2B 모드 버튼 */}
               <button 
-                onClick={() => setViewMode('b2b')}
+                onClick={() => handleModeChange('b2b')}
                 className={`flex-1 flex items-center justify-center text-[11px] md:text-sm font-bold z-10 transition-colors duration-300 ${
                   viewMode === 'b2b' ? 'text-white' : 'text-gray-500 hover:text-gray-900'
                 }`}
@@ -100,7 +113,7 @@ export default function Navbar({ viewMode, setViewMode }: NavbarProps) {
 
               {/* 교육 모드 버튼 */}
               <button 
-                onClick={() => setViewMode('edu')}
+                onClick={() => handleModeChange('edu')}
                 className={`flex-1 flex items-center justify-center text-[11px] md:text-sm font-bold z-10 transition-colors duration-300 ${
                   viewMode === 'edu' ? 'text-white' : 'text-gray-500 hover:text-gray-900'
                 }`}
