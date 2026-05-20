@@ -42,15 +42,7 @@ export default function RecruitHero() {
             소속 기사 간편 지원하기 ➔
           </a>
           
-          {/* 서브 액션: 카톡 1:1 직통 문의 */}
-          <a
-            href={KAKAO_CHAT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto px-8 py-3.5 bg-[#FEE500] text-[#191919] font-extrabold rounded-xl shadow-md active:scale-95 transition-all text-center text-sm md:text-base flex items-center justify-center gap-2"
-          >
-            💬 카톡으로 조건 바로 물어보기
-          </a>
+          
         </div>
 
         {/* ⚡ 5. 신뢰도를 주는 3단 팩트 요약 레이어 (하단 안착) */}

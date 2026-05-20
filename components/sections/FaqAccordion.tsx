@@ -2,48 +2,55 @@
 
 import { useState } from 'react';
 
-const FAQ_DATA = [
-  { q: "세척 시간은 얼마나 걸리나요?", a: "기종에 따라 다르지만 통상 벽걸이는 1시간, 천장형 4Way는 1시간 30분 내외가 소요됩니다." },
-  { q: "B2B 대량 세척 시 야간 작업도 가능한가요?", a: "네, 관공서나 사무실 등 업무 시간을 피해야 하는 경우 야간 및 주말 작업 일정을 조율해 드립니다." },
-  { q: "세척 후 AS 기간은 어떻게 되나요?", a: "세척 후 작동 이상에 대해 3개월간 무상 AS를 보장해 드립니다." },
-  { q: "카드 결제나 세금계산서 발행이 가능한가요?", a: "네, 모든 결제는 카드 가능하며 법인 사업자 세금계산서 발행도 당연히 가능합니다." },
-  { q: "인천 외 지역도 방문하시나요?", a: "현재 인천 전 지역과 김포 지역을 주력으로 서비스하고 있으며, 대량 세척의 경우 경기권까지 협의 가능합니다." },
-];
+interface FaqProps {
+  viewMode?: 'b2b' | 'edu';
+}
 
-export default function FaqAccordion() {
-  // ⚡ 초깃값을 null로 주어 처음엔 모든 질문이 단정하게 닫혀 있도록 설정
+const FAQ_DATA = {
+  b2b: [
+    { question: "대량 세척 시 작업 일정 조율이 가능한가요?", answer: "네, 가능합니다. 기업 및 관공서의 업무 공백을 최소화하기 위해 주말, 야간, 공휴일 등 원하시는 시간대에 맞춰 유연하게 투입 일정을 조율해 드립니다." },
+    { question: "계산서 발행 및 사후 A/S 보장이 되나요?", answer: "물론입니다. 정식 세금계산서 발행은 물론, 세척 후 문제 발생 시 대기업 규격에 준하는 확실한 사후 A/S 처리를 보장합니다." },
+    { question: "인천/김포 외에 타 지역도 대량 세척이 가능한가요?", answer: "기본적으로 인천 서구와 김포 전역을 메인 거점으로 활동하지만, 수량 및 일정에 따라 수도권 전 지역 협의 후 출장 지원이 가능합니다." }
+  ],
+  edu: [
+    { question: "정말 초보자나 비전공자도 지원해서 일할 수 있나요?", answer: "네, 전공이나 기존 경력은 전혀 무관합니다. 모두베스트케어의 정석 완전 분해 교육과 사수 밀착 현장 실습을 거치면 누구나 베테랑 기사로 자립할 수 있습니다." },
+    { question: "에어컨 외에 다른 가전 교육도 비용을 따로 내나요?", answer: "아닙니다. 당사의 소속 기사로 활동하실 크루를 양성하는 과정이므로, 에어컨 성수기 이후 비수기(가을·겨울)를 대비한 세탁기, 냉장고, 공기청정기 마스터 교육까지 올인원으로 전폭 지원합니다." },
+    { question: "차량이 무조건 있어야 지원이 가능한가요?", answer: "가전 세척 특성상 고압 세척기 등 개인 장비를 적재하고 현장 이동을 해야 하므로, 차량 보유 및 운전이 가능하신 분을 우선적으로 선발하고 있습니다." }
+  ]
+};
+
+export default function FaqAccordion({ viewMode = 'b2b' }: FaqProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const toggleFaq = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+  const currentFaq = FAQ_DATA[viewMode];
 
   return (
     <section id="faq" className="w-full min-h-screen md:h-screen flex flex-col items-center justify-center bg-gray-50 pt-20 pb-12 box-border">
       <div className="max-w-2xl w-full mx-auto px-4 flex flex-col justify-center h-full min-h-0">
         
-        <div className="text-center mb-4 flex-shrink-0">
-          <h2 className="text-xl md:text-2xl font-extrabold text-gray-950">자주 묻는 질문</h2>
+        <div className="text-center mb-5 flex-shrink-0">
+          <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${viewMode === 'b2b' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}`}>
+            FAQ
+          </span>
+          <h2 className="text-xl md:text-2xl font-extrabold text-gray-950 mt-2">자주 묻는 질문</h2>
         </div>
 
         {/* 아코디언 리스트 */}
         <div className="space-y-2 flex-1 md:flex-none overflow-y-auto max-h-[50vh] mb-4 pr-1">
-          {FAQ_DATA.map((faq, idx) => {
+          {currentFaq.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div key={idx} className="bg-white rounded-xl border border-gray-100 shadow-xs overflow-hidden">
                 <button 
-                  onClick={() => toggleFaq(idx)}
-                  className="w-full px-4 py-3 text-left font-bold text-xs md:text-sm text-gray-900 flex justify-between items-center bg-white hover:bg-gray-50"
+                  onClick={() => setOpenIndex(isOpen ? null : idx)}
+                  className="w-full px-4 py-3.5 text-left font-bold text-xs md:text-sm text-gray-900 flex justify-between items-center bg-white hover:bg-gray-50 outline-none"
                 >
-                  <span>{faq.q}</span>
-                  <span className={`text-xs text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}>▼</span>
+                  <span className="break-keep pr-4">{faq.question}</span>
+                  <span className={`text-xs text-gray-400 transition-transform flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`}>▼</span>
                 </button>
                 
-                {/* 열릴 때만 자연스럽게 노출 */}
                 {isOpen && (
-                  <div className="px-4 pb-3 pt-1 text-xs md:text-sm text-gray-600 bg-gray-50/50 border-t border-gray-50 leading-relaxed break-keep">
-                    {faq.a}
+                  <div className="px-4 pb-4 pt-1 text-xs md:text-sm text-gray-600 bg-gray-50/50 border-t border-gray-50 leading-relaxed break-keep animate-fadeIn">
+                    {faq.answer}
                   </div>
                 )}
               </div>
@@ -51,10 +58,10 @@ export default function FaqAccordion() {
           })}
         </div>
 
-        {/* ⚡ 하단 안내문 레이어 (여백 축소로 모바일 가시성 100% 확보) */}
-        <div className="text-center bg-blue-50/60 p-3.5 rounded-xl border border-blue-100/50 flex-shrink-0">
-          <p className="text-xs text-gray-600 font-medium">
-            💡 더 궁금하신 점은 <span className="text-blue-600 font-bold">문의하기</span>를 통해 남겨주세요!
+        {/* 하단 유도 캡션 */}
+        <div className="text-center bg-white p-3.5 rounded-xl border border-gray-200/60 flex-shrink-0 shadow-xs">
+          <p className="text-xs text-gray-600 font-medium break-keep">
+            💡 더 궁금하신 점은 하단의 <span className={`font-bold ${viewMode === 'b2b' ? 'text-blue-600' : 'text-emerald-600'}`}>지원 및 문의하기</span> 섹션을 이용해 주세요!
           </p>
         </div>
 

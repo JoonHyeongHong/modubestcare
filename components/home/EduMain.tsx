@@ -1,29 +1,23 @@
+// components/home/EduMain.tsx
 'use client';
 
-import EduHero from '@/components/sections/RecruitHero';
-import Curriculum from '@/components/sections/Curriculum';
-
-import ContactForm from '../sections/ContactForm'; // 공통 사용
+import RecruitHero from "../sections/RecruitHero";
+import Curriculum from "../sections/Curriculum";
+import TrainingBenefits from "../sections/TrainingBenefits";
+import Location from "../sections/Location"; // ⚡ 찾아오시는 길 추가
+import ContactForm from "../sections/ContactForm";
+import FaqAccordion from "../sections/FaqAccordion";
 
 export default function EduMain() {
   return (
     <div className="animate-fadeIn flex-1 flex flex-col">
-      {/* 1. 교육 히어로 섹션 */}
-      <div className="snap-start w-full h-screen">
-        <EduHero />
-      </div>
+      <div className="snap-start w-full h-screen"><RecruitHero /></div>
+      <div className="snap-start w-full h-screen"><Curriculum /></div>
+      {/* <div className="snap-start w-full h-screen"><TrainingBenefits /></div> */}
+      <div className="snap-start w-full h-screen"><FaqAccordion viewMode="edu" /></div> {/* ⚡ 기사 맞춤형 FAQ 작동 */}
 
-      {/* 2. 핵심 커리큘럼 */}
-      <div className="snap-start w-full h-screen">
-        <Curriculum />
-      </div>
-
-
-
-      {/* 4. 상담 신청 (B2B와 공통 폼 사용하되, ID만 맞춰줌) */}
-      <div className="snap-start w-full h-screen">
-        <ContactForm viewMode="edu" />
-      </div>
+      <div className="snap-start w-full h-screen"><ContactForm viewMode="edu" /></div>
+      <div className="snap-start w-full h-screen"><Location /></div> {/* ⚡ 지도 및 주소 정보 배치 */}
     </div>
   );
 }

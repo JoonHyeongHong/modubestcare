@@ -54,7 +54,7 @@ const PROCESS_STEPS = [
   }
 ];
 
-export default function ProcessTabs() {
+export default function ProcessSliders() {
   const [currentStep, setCurrentStep] = useState(0); // 0부터 3까지 index로 관리
 
   const handlePrev = () => {
