@@ -74,25 +74,26 @@ export default function Navbar({ viewMode, setViewMode }: NavbarProps) {
             </a>
           </div>
 
-          {/* 2. PC 전용 메뉴 피드 (모바일에선 숨김) */}
-          <div className="hidden md:flex gap-7 text-sm font-medium">
-            {menuConfig[viewMode].map((menu) => (
-              <a
-                key={menu.id}
-                href={`#${menu.id}`}
-                className={`relative py-2 transition-all duration-300 ${
-                  activeSection === menu.id 
-                    ? `${themeColor} font-bold` 
-                    : "text-gray-500 hover:text-gray-900"
-                }`}
-              >
-                {menu.name}
-                {activeSection === menu.id && (
-                  <span className={`absolute bottom-0 left-0 w-full h-0.5 ${themeBg} animate-in fade-in zoom-in duration-300`} />
-                )}
-              </a>
-            ))}
-          </div>
+          <div className="hidden md:flex items-center gap-4 lg:gap-7 text-xs lg:text-sm font-medium min-w-0 flex-1 justify-center px-4">
+  {menuConfig[viewMode].map((menu) => (
+    <a
+      key={menu.id}
+      href={`#${menu.id}`}
+      // ⚡ 핵심 치트키: whitespace-nowrap (절대 두 줄로 내려가지 마라)
+      // ⚡ shrink-0: 화면이 좁아져도 내 글씨 크기를 강제로 찌그러트리지 마라
+      className={`relative py-2 transition-all duration-300 whitespace-nowrap flex-shrink-0 tracking-tight ${
+        activeSection === menu.id 
+          ? `${themeColor} font-bold` 
+          : "text-gray-500 hover:text-gray-900"
+      }`}
+    >
+      {menu.name}
+      {activeSection === menu.id && (
+        <span className={`absolute bottom-0 left-0 w-full h-0.5 ${themeBg} animate-in fade-in zoom-in duration-300`} />
+      )}
+    </a>
+  ))}
+</div>
 
           {/* 3. 우측 토글 스위치 영역 (반응형 크기 최적화) */}
           <div className="flex items-center flex-shrink-0">

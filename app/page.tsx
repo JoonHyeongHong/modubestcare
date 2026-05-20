@@ -9,7 +9,6 @@ import Navbar from '@/components/common/Navbar';
 
 import EduMain from '@/components/home/EduMain';
 import B2BMain from '@/components/home/B2BMain';
-import Footer from '@/components/common/Footer';
 
 const GET_PORTFOLIOS_QUERY = `
   query GetPortfolios {
@@ -53,7 +52,7 @@ export default function Home() {
       <div className="flex-1 flex flex-col">
         {viewMode === 'b2b' ? <B2BMain /> : <EduMain />}
       </div>
-      <Footer/>
+      
     </main>
   );
 }
