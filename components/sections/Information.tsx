@@ -14,7 +14,7 @@ export default function information() {
                             <span className="text-[#FBBF24]">완전 분해 세척</span>이 답입니다.
                           </h1>
                           <p className="text-base md:text-lg opacity-90 mb-6 break-keep">
-                            인천 서구/김포 지역 관공서, 상가, 사무실 대량 세척 전문
+                            인천/부천 지역 관공서, 상가, 사무실 대량 세척 전문
                           </p>
                           <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
                             <a href="#contact" className="bg-white text-[#0F172A] px-6 py-3 rounded-full font-bold text-sm md:text-base hover:bg-gray-100 transition shadow-lg text-center">
