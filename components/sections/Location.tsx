@@ -64,7 +64,7 @@ export default function Location() {
               </h4>
               <p className="text-gray-600 leading-relaxed break-keep">
                 <strong className="text-gray-800 font-semibold">[지하철]</strong> 인천 1호선 갈산역 인근 <br />
-                <strong className="text-gray-800 font-semibold">[주차]</strong> 주차권 구매 가능
+                <strong className="text-gray-800 font-semibold">[주차]</strong> 주차 가능
               </p>
             </div>
 

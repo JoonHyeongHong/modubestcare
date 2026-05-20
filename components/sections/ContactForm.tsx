@@ -67,10 +67,10 @@ export default function ContactForm({ viewMode = 'b2b' }: ContactFormProps) {
       {/* 헤더 (카톡 버튼 완전히 제거하여 높이 확보!) */}
       <div className="text-center mb-4 flex-shrink-0">
         <h2 className="text-xl md:text-2xl font-extrabold text-gray-950">
-          {viewMode === 'b2b' ? '빠른 견적 문의' : '소속 세척 기사 지원하기'}
+          {viewMode === 'b2b' ? '빠른 견적 문의하기' : '세척 기사 지원하기'}
         </h2>
         <p className="text-gray-500 mt-1 text-xs break-keep">
-          {viewMode === 'b2b' ? '대량 세척 견적을 빠르게 안내해 드립니다.' : '정식 교육 후 프로 크루로 활동할 팀원을 모십니다.'}
+          {viewMode === 'b2b' ? '대량 세척 견적을 빠르게 안내해 드립니다.' : '정식 교육 후 활동할 기사님을 모십니다.'}
         </p>
       </div>
 
@@ -227,7 +227,7 @@ export default function ContactForm({ viewMode = 'b2b' }: ContactFormProps) {
               <div className="p-3 bg-green-50 text-green-700 rounded-lg text-center font-medium text-sm animate-bounce">
                 {viewMode === 'b2b' 
                   ? '성공적으로 접수되었습니다!' 
-                  : '지원서가 정상 접수되었습니다. 서류 검토 후 면접 일정을 위해 연락드리겠습니다.'}
+                  : '지원서가 정상 접수되었습니다. 지원 서류 검토 후 면접 일정을 위해 연락드리겠습니다.'}
               </div>
             )}
           </form>

@@ -17,9 +17,9 @@ export default function B2BMain() {
       <div className="snap-start w-full h-screen"><BeforeAfterSlider /></div>
       <div className="snap-start w-full h-screen"><ProcessSliders /></div>
       <div className="snap-start w-full h-screen"><QuoteCalculator /></div>
-      <div className="snap-start w-full h-screen"><ContactForm viewMode="b2b" /></div>
       <div className="snap-start w-full h-screen"><Portfolio /></div>
       <div className="snap-start w-full h-screen"><FaqAccordion /></div>
+      <div className="snap-start w-full h-screen"><ContactForm viewMode="b2b" /></div>
     </div>
   );
 }

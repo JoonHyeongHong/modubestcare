@@ -6,10 +6,10 @@ import { useState } from 'react';
 
 
 import Navbar from '@/components/common/Navbar';
-import KakaoButton from '@/components/common/KakaoButton';
 
 import EduMain from '@/components/home/EduMain';
 import B2BMain from '@/components/home/B2BMain';
+import Footer from '@/components/common/Footer';
 
 const GET_PORTFOLIOS_QUERY = `
   query GetPortfolios {
@@ -46,16 +46,14 @@ export default function Home() {
   const [viewMode, setViewMode] = useState<'b2b' | 'edu'>('b2b');
 
   return (
-    <main className="relative h-screen overflow-y-auto snap-y snap-mandatory scroll-smooth bg-gray-50">
-      
+    // md: 즉, 데스크톱 환경(768px 이상)에서만 h-screen 및 스냅 작동
+    <main className="relative min-h-screen md:h-screen overflow-y-auto md:snap-y md:snap-mandatory scroll-smooth bg-gray-50">
       <Navbar viewMode={viewMode} setViewMode={setViewMode} />
 
-      {/* 🟢 화면 전환 영역 */}
-      <div className="flex-1 flex flex-col transition-opacity duration-500 ease-in-out">
-        {viewMode === 'b2b' ? <B2BMain/> :<EduMain/>}
-      </div>    
-      <KakaoButton />
-      
+      <div className="flex-1 flex flex-col">
+        {viewMode === 'b2b' ? <B2BMain /> : <EduMain />}
+      </div>
+      <Footer/>
     </main>
   );
 }
