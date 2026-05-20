@@ -58,37 +58,43 @@ export default function ProcessTabs() {
   const [activeTab, setActiveTab] = useState(1);
 
   return (
-    // 1. section 태그가 화면 전체(h-screen)를 차지하도록 설정
+    // 1. 모바일에서는 컨텐츠 길이에 맞추고(min-h-screen), PC(md)에서만 완벽한 한 화면 스냅 고정(md:h-screen)
     <section 
       id="process" 
-      className="w-full min-h-screen flex items-center justify-center bg-gray-50 overflow-hidden pt-20"
+      className="w-full min-h-screen md:h-screen flex flex-col items-center justify-center bg-gray-50 pt-20 scroll-mt-20 overflow-hidden box-border"
     >
-      <div className="max-w-5xl w-full mx-auto px-6 flex flex-col justify-center h-full pb-8">
-        {/* 헤더 영역: 마진 축소 및 텍스트 반응형 조절 */}
-        <div className="text-center mb-6 md:mb-10">
+      <div className="max-w-5xl w-full mx-auto px-4 md:px-6 flex flex-col justify-center h-full py-4 md:py-8 min-h-0">
+        
+        {/* 헤더 영역 (flex-shrink-0으로 글자 보존) */}
+        <div className="text-center mb-5 md:mb-8 flex-shrink-0">
           <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 leading-tight">
             단 한 대도 대충하지 않는<br />
             <span className="text-blue-600">4단계 정석 세척 프로세스</span>
           </h2>
-          <p className="text-gray-500 mt-2 text-sm md:text-base">
+          <p className="text-gray-500 mt-2 text-xs md:text-sm">
             눈에 보이지 않는 곳까지 완벽하게 분해하고 살균합니다.
           </p>
         </div>
 
-        {/* 탭 버튼 영역: flex-wrap을 유지하되 간격 최적화 */}
-        <div className="flex flex-wrap md:flex-nowrap justify-center gap-2 md:gap-3 mb-6">
+        {/* 2. [모바일 치트키] 탭 버튼 영역 최적화:
+            - 모바일(md 미만): 가로 한 줄로 배치하되 화면 밖으로 넘치면 부드럽게 스와이프 스크롤 (overflow-x-auto / whitespace-nowrap)
+            - 데스크톱(md): 원래대로 가로 전체 균등 배분 (md:flex-nowrap md:w-full)
+            - 스크롤바 숨김 가공 처리 (no-scrollbar)
+        */}
+        <div className="w-full flex items-center overflow-x-auto md:overflow-visible gap-2 md:gap-3 mb-6 pb-2 md:pb-0 scrollbar-hide no-scrollbar flex-row whitespace-nowrap md:whitespace-normal flex-shrink-0">
           {PROCESS_STEPS.map((step) => (
             <button
               key={step.id}
               onClick={() => setActiveTab(step.id)}
-              className={`flex-1 min-w-[120px] md:min-w-0 py-2 md:py-3 px-2 md:px-4 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 border-2 ${
+              // 모바일에서는 고정폭(w-[130px])을 주어 나란히 밀리게 하고, PC에서는 flex-1 분할
+              className={`flex-shrink-0 w-[130px] md:w-auto md:flex-1 py-2.5 md:py-3 px-3 md:px-4 rounded-xl font-bold text-xs md:text-sm transition-all duration-200 border-2 ${
                 activeTab === step.id
-                  ? 'border-blue-600 bg-blue-600 text-white shadow-md transform -translate-y-1'
+                  ? 'border-blue-600 bg-blue-600 text-white shadow-sm'
                   : 'border-gray-200 bg-white text-gray-500 hover:border-blue-300 hover:text-blue-500'
               }`}
             >
               <div className="flex items-center justify-center gap-1.5">
-                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${activeTab === step.id ? 'bg-white text-blue-600' : 'bg-gray-100 text-gray-500'}`}>
+                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] flex-shrink-0 ${activeTab === step.id ? 'bg-white text-blue-600' : 'bg-gray-100 text-gray-500'}`}>
                   {step.id}
                 </span>
                 <span className="truncate">{step.title}</span>
@@ -97,42 +103,45 @@ export default function ProcessTabs() {
           ))}
         </div>
 
-        {/* 콘텐츠 영역: 고정 높이 대신 가변 높이(max-h)와 flex 사용 */}
-        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 relative overflow-hidden flex-1 max-h-[400px] md:max-h-[450px] min-h-[250px]">
+        {/* 3. 콘텐츠 디스플레이 박스:
+            - 유연하게 줄어드는 flex-1 구조에 모바일 전용 max-h-none 및 최소 높이 조율
+        */}
+        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 relative overflow-hidden flex-1 min-h-[340px] md:min-h-[250px] max-h-[480px] md:max-h-[420px]">
           {PROCESS_STEPS.map((step) => (
             <div
               key={step.id}
-              className={`absolute inset-0 p-6 md:p-10 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 transition-all duration-500 ease-in-out ${
+              className={`absolute inset-0 p-5 md:p-10 flex flex-col md:flex-row items-center justify-center gap-5 md:gap-10 transition-all duration-300 ease-in-out ${
                 activeTab === step.id
                   ? 'opacity-100 translate-x-0 z-10'
-                  : 'opacity-0 translate-x-8 pointer-events-none z-0'
+                  : 'opacity-0 translate-x-4 pointer-events-none z-0'
               }`}
             >
-              {/* 좌측: 아이콘 (비율 축소) */}
-              <div className={`w-24 h-24 md:w-36 md:h-36 flex-shrink-0 rounded-full flex items-center justify-center shadow-inner ${step.color}`}>
+              {/* 좌측: 원형 아이콘 베이스 (모바일에서 살짝 컴팩트하게) */}
+              <div className={`w-20 h-20 md:w-32 md:h-32 flex-shrink-0 rounded-full flex items-center justify-center shadow-inner ${step.color}`}>
                 <div className="scale-75 md:scale-100">
                   {step.icon}
                 </div>
               </div>
               
-              {/* 우측: 텍스트 설명 (텍스트 크기 및 간격 축소) */}
-              <div className="flex-1 text-center md:text-left overflow-y-auto max-h-full">
-                <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-800 rounded-full text-[10px] md:text-xs font-bold mb-2">
+              {/* 우측: 텍스트 레이블 서사 피드 */}
+              <div className="flex-1 text-center md:text-left overflow-y-auto max-h-full pr-1 custom-scrollbar">
+                <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-800 rounded-full text-[10px] font-bold mb-2">
                   STEP {step.id}
                 </span>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-1">
+                <h3 className="text-lg md:text-2xl font-bold text-gray-900 mb-1">
                   {step.title}
                 </h3>
-                <h4 className="text-sm md:text-base text-blue-600 font-medium mb-2">
+                <h4 className="text-xs md:text-base text-blue-600 font-medium mb-3">
                   "{step.subtitle}"
                 </h4>
-                <p className="text-gray-600 text-sm md:text-base leading-relaxed break-keep">
+                <p className="text-gray-600 text-xs md:text-sm leading-relaxed break-keep">
                   {step.description}
                 </p>
               </div>
             </div>
           ))}
         </div>
+
       </div>
     </section>
   )
