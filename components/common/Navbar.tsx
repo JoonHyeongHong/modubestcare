@@ -23,8 +23,9 @@ const menuConfig = {
   edu: [
     { name: "모집 안내", id: "hero" }, // 교육 메인 히어로 및 과정 소개
     { name: "교육 과정", id: "curriculum" },   // 사계절 일거리 및 대기업 연계 혜택
-    { name: "지원하기", id: "contact" },    // 소속 기사 간편 지원서
-    {name : "자주 묻는 질문", id: "faq"},
+  
+    {name : "자주 묻는 질문", id: "faq"},  { name: "지원하기", id: "contact" },    // 소속 기사 간편 지원서
+    
     {name : "찾아오시는 길", id: "location"} // 교육장 위치 및 교통 안내
   ],
 };
