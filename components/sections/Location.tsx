@@ -2,7 +2,7 @@
 
 export default function Location() {
   // 실제 사무실/교육장 주소 및 지도 주소 매핑
-  const JIDO_URL = "https://map.naver.com/"; // 네이버 지도 공유 링크 주소 넣는 곳
+  const JIDO_URL = "https://map.naver.com/p/search/%EC%A0%9C%EC%9D%B4%ED%83%80%EC%9B%8C3%EC%B0%A8/place/1596732302?placePath=%3Fbk_query%3D%25EC%25A0%259C%25EC%259D%25B4%25ED%2583%2580%25EC%259B%258C3%25EC%25B0%25A8%26entry%3Dpll%26from%3Dnx%26fromNxList%3Dtrue&placeSearchOption=bk_query%3D%25EC%25A0%259C%25EC%259D%25B4%25ED%2583%2580%25EC%259B%258C3%25EC%25B0%25A8%26entry%3Dpll%26fromNxList%3Dtrue%26originalQuery%3D%25EC%25A0%259C%25EC%259D%25B4%25ED%2583%2580%25EC%259B%258C3%25EC%25B0%25A8%26x%3D126.704529%26y%3D37.514823&searchType=place"; // 네이버 지도 공유 링크 주소 넣는 곳
 
   return (
     <section 
@@ -17,10 +17,10 @@ export default function Location() {
             LOCATION
           </span>
           <h2 className="text-2xl md:text-3xl font-extrabold text-gray-950 mt-2 tracking-tight">
-            모두베스트케어 오시는 길
+            모두베스트케어 찾아 오시는 길
           </h2>
           <p className="text-gray-500 mt-1 text-xs md:text-sm">
-            소속 기사 이론 교육 및 완전 분해 실습이 이루어지는 본사 센터입니다.
+            소속 기사 이론 교육 및 완전 분해 실습이 이루어지는 교육장 및 사무실입니다.
           </p>
         </div>
 
@@ -33,7 +33,7 @@ export default function Location() {
             <div className="relative z-10 space-y-3">
               <span className="text-3xl">📍</span>
               <p className="text-xs md:text-sm text-gray-600 font-bold break-keep">
-                인천 서구 청라 / 김포 고촌 인근 <br /> 모두베스트케어 가전 세척 교육장
+                모두베스트케어 가전 세척 교육장
               </p>
               <a 
                 href={JIDO_URL}
@@ -53,8 +53,8 @@ export default function Location() {
                 <span>🏢</span> 상세 주소
               </h4>
               <p className="text-gray-600 leading-relaxed font-medium">
-                인천광역시 서구 청라라임로 OOO, OO타워 O층 <br />
-                <span className="text-[11px] text-gray-400 font-normal">(김포 거점 기사 실습실 동시 운영)</span>
+                인천광역시 부평대로 337, 4층 422호 <br />
+              
               </p>
             </div>
 
@@ -63,8 +63,8 @@ export default function Location() {
                 <span>🚗</span> 교통 및 주차 안내
               </h4>
               <p className="text-gray-600 leading-relaxed break-keep">
-                <strong className="text-gray-800 font-semibold">[지하철]</strong> 인천2호선 가정역 또는 7호선 연장선 인근 <br />
-                <strong className="text-gray-800 font-semibold">[주차]</strong> 소속 기사 면접 및 장비 수령 방문 시 건물 내 무상 주차 지원 가능 (차량 방문 편리)
+                <strong className="text-gray-800 font-semibold">[지하철]</strong> 인천 1호선 갈산역 인근 <br />
+                <strong className="text-gray-800 font-semibold">[주차]</strong> 주차권 구매 가능
               </p>
             </div>
 
@@ -74,7 +74,7 @@ export default function Location() {
               </h4>
               <p className="text-gray-600 font-medium">
                 전화 번호: <span className="text-gray-900 font-bold">010-0000-0000</span> <br />
-                <span className="text-[11px] text-gray-400 font-normal">* 상시 현장 교육이 진행 중이므로, 사전 예약 후 방문 부탁드립니다.</span>
+                <span className="text-[11px] text-gray-400 font-normal">* 사전 예약 후 방문 부탁드립니다.</span>
               </p>
             </div>
           </div>

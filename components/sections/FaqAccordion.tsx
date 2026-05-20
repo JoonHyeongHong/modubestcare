@@ -61,7 +61,7 @@ export default function FaqAccordion({ viewMode = 'b2b' }: FaqProps) {
         {/* 하단 유도 캡션 */}
         <div className="text-center bg-white p-3.5 rounded-xl border border-gray-200/60 flex-shrink-0 shadow-xs">
           <p className="text-xs text-gray-600 font-medium break-keep">
-            💡 더 궁금하신 점은 하단의 <span className={`font-bold ${viewMode === 'b2b' ? 'text-blue-600' : 'text-emerald-600'}`}>지원 및 문의하기</span> 섹션을 이용해 주세요!
+            💡 더 궁금하신 점은 하단의 <span className={`font-bold ${viewMode === 'b2b' ? 'text-blue-600' : 'text-emerald-600'}`}>{viewMode === "b2b"? "문의" : "지원"}하기</span> 섹션을 이용해 주세요!
           </p>
         </div>
 
