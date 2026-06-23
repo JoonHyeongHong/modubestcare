@@ -8,6 +8,7 @@ import Location from "../sections/Location"; // ⚡ 찾아오시는 길 추가
 import ContactForm from "../sections/ContactForm";
 import FaqAccordion from "../sections/FaqAccordion";
 import Footer from "../common/Footer";
+import KakaoButton from "../common/KakaoButton";
 
 export default function EduMain() {
   return (
@@ -23,7 +24,7 @@ export default function EduMain() {
     <Location />
       {/* 이제 자석에 걸리지 않고 FAQ 바로 아래 단정하게 안착합니다 */}
     </div>
-      
+      <KakaoButton/>
     </div>
   );
 }

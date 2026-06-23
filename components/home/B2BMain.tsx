@@ -8,6 +8,7 @@ import QuoteCalculator from "../sections/QuoteCalculator";
 import Information from "../sections/Information";
 import Portfolio from "../sections/Portfolio";
 import WhyUs from "../sections/WhyUs";
+import KakaoButton from "../common/KakaoButton";
 
 
 interface B2BMainProps {
@@ -29,6 +30,7 @@ export default function B2BMain({portfolios}: B2BMainProps) {
       <div className="w-full">
         <ContactForm viewMode="b2b" />
       </div>
+      <KakaoButton/>
     </div>
   );
 }
