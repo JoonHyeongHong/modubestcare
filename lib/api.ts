@@ -8,7 +8,7 @@ interface FetchAPIResponse {
 
 
 export async function fetchAPI(query: string, { variables}: {variables?: any} = {}){
-  const API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL as string;
+  const API_URL = 'https://c17e-121-173-24-219.ngrok-free.app/graphql' as string;
 
   if(!API_URL){
     throw new Error('환경변수 NEXT_PUBLIC_WORDPRESS_API_URL이 설정되지 않았습니다. .env.local 파일을 확인해주세요.');
