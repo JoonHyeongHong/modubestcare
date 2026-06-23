@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+// ⚡ 1. 커스텀 훅 임포트
+import { useScrollFadeIn } from '@/hooks/useScrollFadeIn';
 
 interface FaqProps {
   viewMode?: 'b2b' | 'edu';
@@ -22,34 +24,59 @@ const FAQ_DATA = {
 export default function FaqAccordion({ viewMode = 'b2b' }: FaqProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const currentFaq = FAQ_DATA[viewMode];
+  
+  // ⚡ 2. 훅 실행
+  const { ref, className } = useScrollFadeIn();
 
   return (
-    <section id="faq" className="w-full min-h-screen md:h-screen flex flex-col items-center justify-center bg-gray-50 pt-20 pb-12 box-border">
-      <div className="max-w-2xl w-full mx-auto px-4 flex flex-col justify-center h-full min-h-0">
+    // ⚡ 3. 강제 높이 제한(min-h-screen, h-screen) 해제 후 패딩 적용 및 애니메이션 결합
+    <section 
+      id="faq" 
+      ref={ref}
+      className={`w-full bg-slate-50 py-16 md:py-24 box-border scroll-mt-20 ${className}`}
+    >
+      <div className="max-w-3xl w-full mx-auto px-6 flex flex-col justify-center">
         
-        <div className="text-center mb-5 flex-shrink-0">
-          <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${viewMode === 'b2b' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}`}>
+        {/* 헤더 */}
+        <div className="text-center mb-10 md:mb-12">
+          {/* viewMode에 따른 색상 테마 유지 및 패딩 넉넉하게 수정 */}
+          <span className={`text-xs md:text-sm font-bold px-3 py-1.5 rounded-full tracking-wide ${viewMode === 'b2b' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-700'}`}>
             FAQ
           </span>
-          <h2 className="text-xl md:text-2xl font-extrabold text-gray-950 mt-2">자주 묻는 질문</h2>
+          <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 mt-4 tracking-tight">
+            자주 묻는 질문
+          </h2>
         </div>
 
-        {/* 아코디언 리스트 */}
-        <div className="space-y-2 flex-1 md:flex-none overflow-y-auto max-h-[50vh] mb-4 pr-1">
+        {/* ⚡ 4. 아코디언 리스트: 내부 스크롤을 막던 max-h-[50vh]와 overflow-y-auto를 완전히 제거했습니다. */}
+        <div className="space-y-3 md:space-y-4 mb-8 w-full">
           {currentFaq.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
-              <div key={idx} className="bg-white rounded-xl border border-gray-100 shadow-xs overflow-hidden">
+              <div 
+                key={idx} 
+                className={`bg-white rounded-2xl border transition-all duration-300 shadow-sm overflow-hidden ${
+                  isOpen ? 'border-blue-300 shadow-md' : 'border-slate-200/60 hover:border-blue-200'
+                }`}
+              >
                 <button 
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  className="w-full px-4 py-3.5 text-left font-bold text-xs md:text-sm text-gray-900 flex justify-between items-center bg-white hover:bg-gray-50 outline-none"
+                  className="w-full px-5 py-4 md:px-6 md:py-5 text-left font-bold text-sm md:text-base text-slate-900 flex justify-between items-center bg-white hover:bg-slate-50 outline-none transition-colors"
                 >
-                  <span className="break-keep pr-4">{faq.question}</span>
-                  <span className={`text-xs text-gray-400 transition-transform flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`}>▼</span>
+                  <span className="break-keep pr-6 leading-relaxed">{faq.question}</span>
+                  {/* 텍스트(▼) 대신 깔끔한 SVG 아이콘으로 교체하여 회전 애니메이션 적용 */}
+                  <svg 
+                    className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 text-blue-500' : ''}`} 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                  </svg>
                 </button>
                 
                 {isOpen && (
-                  <div className="px-4 pb-4 pt-1 text-xs md:text-sm text-gray-600 bg-gray-50/50 border-t border-gray-50 leading-relaxed break-keep animate-fadeIn">
+                  <div className="px-5 pb-5 pt-2 md:px-6 md:pb-6 md:pt-2 text-sm md:text-base text-slate-600 bg-slate-50 border-t border-slate-100 leading-relaxed break-keep animate-in fade-in slide-in-from-top-2 duration-300">
                     {faq.answer}
                   </div>
                 )}
@@ -59,9 +86,9 @@ export default function FaqAccordion({ viewMode = 'b2b' }: FaqProps) {
         </div>
 
         {/* 하단 유도 캡션 */}
-        <div className="text-center bg-white p-3.5 rounded-xl border border-gray-200/60 flex-shrink-0 shadow-xs">
-          <p className="text-xs text-gray-600 font-medium break-keep">
-            💡 더 궁금하신 점은 하단의 <span className={`font-bold ${viewMode === 'b2b' ? 'text-blue-600' : 'text-emerald-600'}`}>{viewMode === "b2b"? "문의" : "지원"}하기</span> 섹션을 이용해 주세요!
+        <div className="text-center bg-white p-5 md:p-6 rounded-2xl border border-slate-200 shadow-sm transition-transform hover:-translate-y-1 duration-300">
+          <p className="text-sm md:text-base text-slate-600 font-medium break-keep">
+            💡 더 궁금하신 점은 하단의 <span className={`font-bold ${viewMode === 'b2b' ? 'text-blue-600' : 'text-emerald-600'}`}>{viewMode === "b2b"? "견적 문의" : "지원"}하기</span> 섹션을 이용해 주세요!
           </p>
         </div>
 

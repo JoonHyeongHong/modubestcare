@@ -1,22 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useActiveSection } from "@/hooks/useActiveSection";
 
-interface NavbarProps {
-  viewMode : 'b2b' | 'edu';
-  setViewMode : (mode:'b2b' | 'edu') => void;
-}
-
-
-
+import Link from "next/link";
+import {usePathname} from "next/navigation";
 
 const menuConfig = {
   b2b: [
     { name: "서비스 소개", id: "hero" },
-    { name: "세척 퀄리티", id: "before-after" }, //BeforeAfter와 Process 섹션 통합 유도
+    { name: "세척 퀄리티", id: "before-after" },
     { name: "실시간 견적", id: "calculator" },
-   
     {name : "최근 작업", id: "portfolio"},
     {name : "자주 묻는 질문", id: "faq"},
      { name: "견적 문의", id: "contact" },
@@ -31,7 +25,10 @@ const menuConfig = {
   ],
 };
 
-export default function Navbar({ viewMode, setViewMode }: NavbarProps) {
+export default function Navbar() {
+  const pathname = usePathname();
+  const viewMode = pathname.startsWith('/edu') ? 'edu' : 'b2b';
+
   const sectionIds = menuConfig[viewMode].map(m => m.id);
   const activeSection = useActiveSection(sectionIds);
   
@@ -43,23 +40,18 @@ export default function Navbar({ viewMode, setViewMode }: NavbarProps) {
   const themeBg = viewMode === 'b2b' ? 'bg-blue-600' : 'bg-emerald-600';
 
 
-  const handleModeChange = (mode: 'b2b' | 'edu') => {
-  setViewMode(mode);
-  // 모드가 바뀐 직후 브라우저 스크롤을 최상단으로 강제 이동
-  if (typeof window !== 'undefined') {
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  }
-  setIsOpen(false); // 모바일 드로어 닫기
-};
+  //URL 경로가 변경되면 열려있던 모바일 메뉴를 자동으로 닫음
+  useEffect(()=>{
+    setIsOpen(false);
+  },[pathname]);
 
   return (
-    <>
+<>
       <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 select-none">
         <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between gap-2">
           
           {/* 1. 로고 및 모바일 메뉴 버튼 묶음 */}
           <div className="flex items-center gap-2">
-            {/* 모바일전용 삼선(햄버거) 버튼 */}
             <button 
               onClick={() => setIsOpen(true)}
               className="p-1 md:hidden text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
@@ -69,36 +61,36 @@ export default function Navbar({ viewMode, setViewMode }: NavbarProps) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-            <a href="#hero" className={`text-base md:text-xl font-extrabold transition-colors duration-300 ${themeColor}`}>
-              모두베스트케어
-            </a>
+            {/* 로고 클릭 시 현재 모드의 최상단으로 이동 */}
+            <Link href={viewMode === 'b2b' ? '/' : '/edu'} className={`text-base md:text-xl font-extrabold transition-colors duration-300 ${themeColor}` }>
+              모두홈케어 {viewMode === 'edu' ? <span className={themeColor}>아카데미</span> : null}
+            </Link>
           </div>
 
+          {/* 2. PC 메인 네비게이션 */}
           <div className="hidden md:flex items-center gap-4 lg:gap-7 text-xs lg:text-sm font-medium min-w-0 flex-1 justify-center px-4">
-  {menuConfig[viewMode].map((menu) => (
-    <a
-      key={menu.id}
-      href={`#${menu.id}`}
-      // ⚡ 핵심 치트키: whitespace-nowrap (절대 두 줄로 내려가지 마라)
-      // ⚡ shrink-0: 화면이 좁아져도 내 글씨 크기를 강제로 찌그러트리지 마라
-      className={`relative py-2 transition-all duration-300 whitespace-nowrap flex-shrink-0 tracking-tight ${
-        activeSection === menu.id 
-          ? `${themeColor} font-bold` 
-          : "text-gray-500 hover:text-gray-900"
-      }`}
-    >
-      {menu.name}
-      {activeSection === menu.id && (
-        <span className={`absolute bottom-0 left-0 w-full h-0.5 ${themeBg} animate-in fade-in zoom-in duration-300`} />
-      )}
-    </a>
-  ))}
-</div>
+            {menuConfig[viewMode].map((menu) => (
+              <a
+                key={menu.id}
+                href={`#${menu.id}`}
+                className={`relative py-2 transition-all duration-300 whitespace-nowrap flex-shrink-0 tracking-tight ${
+                  activeSection === menu.id 
+                    ? `${themeColor} font-bold` 
+                    : "text-gray-500 hover:text-gray-900"
+                }`}
+              >
+                {menu.name}
+                {activeSection === menu.id && (
+                  <span className={`absolute bottom-0 left-0 w-full h-0.5 ${themeBg} animate-in fade-in zoom-in duration-300`} />
+                )}
+              </a>
+            ))}
+          </div>
 
-          {/* 3. 우측 토글 스위치 영역 (반응형 크기 최적화) */}
+          {/* 3. 우측 토글 스위치 영역 (상태값 변경 대신 Next.js Link 라우팅 적용) */}
           <div className="flex items-center flex-shrink-0">
-            {/* 모바일에서는 w-32(128px), PC에서는 w-52(208px)로 유연하게 변동 */}
             <div className="bg-gray-100 p-1 rounded-full shadow-inner flex relative w-32 md:w-52 h-9 md:h-10 min-w-0">
+              
               {/* 스위치 배경 캡슐 슬라이더 */}
               <div 
                 className={`absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full transition-all duration-300 ease-in-out shadow-sm ${
@@ -106,9 +98,9 @@ export default function Navbar({ viewMode, setViewMode }: NavbarProps) {
                 }`}
               ></div>
 
-              {/* B2B 모드 버튼 */}
-              <button 
-                onClick={() => handleModeChange('b2b')}
+              {/* B2B 모드 버튼 -> 메인 라우트(/)로 이동 */}
+              <Link 
+                href="/"
                 className={`flex-1 flex items-center justify-center text-[11px] md:text-sm font-bold z-10 transition-colors duration-300 ${
                   viewMode === 'b2b' ? 'text-white' : 'text-gray-500 hover:text-gray-900'
                 }`}
@@ -116,11 +108,11 @@ export default function Navbar({ viewMode, setViewMode }: NavbarProps) {
                 <span>🏢</span>
                 <span className="ml-1 hidden md:inline">B2B 세척</span>
                 <span className="ml-0.5 md:hidden text-[10px]">B2B</span>
-              </button>
+              </Link>
 
-              {/* 교육 모드 버튼 */}
-              <button 
-                onClick={() => handleModeChange('edu')}
+              {/* 교육 모드 버튼 -> 교육 라우트(/edu)로 이동 */}
+              <Link 
+                href="/edu"
                 className={`flex-1 flex items-center justify-center text-[11px] md:text-sm font-bold z-10 transition-colors duration-300 ${
                   viewMode === 'edu' ? 'text-white' : 'text-gray-500 hover:text-gray-900'
                 }`}
@@ -128,7 +120,7 @@ export default function Navbar({ viewMode, setViewMode }: NavbarProps) {
                 <span>🛠️</span>
                 <span className="ml-1 hidden md:inline">기사 양성</span>
                 <span className="ml-0.5 md:hidden text-[10px]">교육</span>
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -137,10 +129,8 @@ export default function Navbar({ viewMode, setViewMode }: NavbarProps) {
 
       {/* 4. 모바일 전용 네비게이션 드로어 (Drawer 팝업 창) */}
       <div className={`fixed inset-0 z-50 md:hidden transition-all duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-        {/* 어두운 배경 반투명 오버레이 레이어 */}
         <div className="absolute inset-0 bg-black/40 backdrop-blur-xs" onClick={() => setIsOpen(false)}></div>
         
-        {/* 드로어 본체 콘텐츠 컨테이너 */}
         <div className={`absolute top-0 left-0 bottom-0 w-64 bg-white shadow-2xl p-6 flex flex-col justify-between transition-transform duration-300 ease-out transform ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
           <div className="space-y-6">
             <div className="flex items-center justify-between border-b pb-4">
@@ -152,7 +142,6 @@ export default function Navbar({ viewMode, setViewMode }: NavbarProps) {
               </button>
             </div>
             
-            {/* 모바일 메뉴 목록 내비게이션 피드 */}
             <nav className="flex flex-col gap-1.5">
               {menuConfig[viewMode].map((menu) => (
                 <a
@@ -173,7 +162,7 @@ export default function Navbar({ viewMode, setViewMode }: NavbarProps) {
           </div>
 
           <div className="text-[10px] text-gray-400 border-t pt-4 text-center">
-            © 모두베스트케어. All rights reserved.
+            © 모두홈케어. All rights reserved.
           </div>
         </div>
       </div>
