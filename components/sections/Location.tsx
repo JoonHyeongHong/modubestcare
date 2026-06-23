@@ -17,7 +17,7 @@ export default function Location() {
             LOCATION
           </span>
           <h2 className="text-2xl md:text-3xl font-extrabold text-gray-950 mt-2 tracking-tight">
-            모두베스트케어 찾아 오시는 길
+            모두홈케어 찾아 오시는 길
           </h2>
           <p className="text-gray-500 mt-1 text-xs md:text-sm">
             소속 기사 이론 교육 및 완전 분해 실습이 이루어지는 교육장 및 사무실입니다.
@@ -33,7 +33,7 @@ export default function Location() {
             <div className="relative z-10 space-y-3">
               <span className="text-3xl">📍</span>
               <p className="text-xs md:text-sm text-gray-600 font-bold break-keep">
-                모두베스트케어 가전 세척 교육장
+                모두홈케어 가전 세척 교육장
               </p>
               <a 
                 href={JIDO_URL}

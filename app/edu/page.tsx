@@ -1,14 +1,15 @@
 import Navbar from '@/components/common/Navbar';
 import EduMain from '@/components/home/EduMain';
-import {fetchAPI} from "@/lib/api";
+
 export default function EduPage() {
   return (
-    <main className="relative min-h-screen md:h-screen overflow-y-auto md:snap-y md:snap-mandatory scroll-smooth bg-gray-50">
-      <Navbar />
-
-      <div className="flex-1 flex flex-col">
-        <EduMain />
-      </div>
-    </main>
+    <main className="min-h-screen flex flex-col bg-slate-50 scroll-smooth">
+          <Navbar />
+    
+          <div className="flex-1 flex flex-col">
+            {/* 3. 가져온 portfolios 데이터를 자식 컴포넌트(B2BMain)로 넘겨줍니다 (Props) */}
+            <EduMain />
+          </div>
+        </main>
   );
 }

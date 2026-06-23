@@ -20,7 +20,7 @@ export default function Information() {
               <span className="text-[#FBBF24]">완전 분해 세척</span>이 답입니다.
             </h1>
             <p className="text-base md:text-xl text-slate-300 mb-8 md:mb-10 break-keep font-medium">
-              인천/부천 지역 관공서, 지식산업센터, 상가 대량 유지보수 전문
+              관공서, 지식산업센터, 상가 대량 유지보수 전문
             </p>
             
             <div className="flex justify-center md:justify-start">
