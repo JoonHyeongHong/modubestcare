@@ -1,30 +1,35 @@
-// components/home/EduMain.tsx
 'use client';
 
 import RecruitHero from "../sections/RecruitHero";
 import Curriculum from "../sections/Curriculum";
 import TrainingBenefits from "../sections/TrainingBenefits";
-import Location from "../sections/Location"; // ⚡ 찾아오시는 길 추가
+import Location from "../sections/Location"; 
 import ContactForm from "../sections/ContactForm";
 import FaqAccordion from "../sections/FaqAccordion";
-import Footer from "../common/Footer";
+// Footer는 최상위 layout이나 page에서 렌더링되므로 여기서 import하지 않아도 됩니다.
 import KakaoButton from "../common/KakaoButton";
 
 export default function EduMain() {
   return (
-    <div className="animate-fadeIn flex-1 flex flex-col">
+    // ⚡ 1. 전체 컨테이너는 너비 100%(w-full)와 세로 정렬(flex-col)만 유지합니다.
+    <div className="w-full flex flex-col animate-fadeIn">
+      
       <div className="w-full"><RecruitHero /></div>
       <div className="w-full"><Curriculum /></div>
-      {/* <div className="snap-start w-full h-screen"><TrainingBenefits /></div> */}
-      <div className="w-full h-screen"><FaqAccordion viewMode="edu" /></div> {/* ⚡ 기사 맞춤형 FAQ 작동 */}
+      
+      {/* 필요시 주석 해제 후 사용 */}
+      {/* <div className="w-full"><TrainingBenefits /></div> */}
+      
+      {/* ⚡ 2. 억지로 부여된 h-screen을 제거하여 FAQ가 길어져도 자연스럽게 늘어나게 합니다. */}
+      <div className="w-full"><FaqAccordion viewMode="edu" /></div> 
 
       <div className="w-full"><ContactForm viewMode="edu" /></div>
-    <div className="w-full min-h-screen md:min-h-screen flex flex-col justify-between bg-gray-50">
-      {/* FAQ 섹션 내부의 h-screen, min-h-screen 속성은 완전히 지워주거나 제거해야 밀리지 않습니다 */}
-    <Location />
-      {/* 이제 자석에 걸리지 않고 FAQ 바로 아래 단정하게 안착합니다 */}
-    </div>
-      <KakaoButton/>
+      
+      {/* ⚡ 3. Location 래퍼에 있던 min-h-screen과 불필요한 bg-gray-50을 걷어냈습니다.
+             배경색과 패딩은 Location 컴포넌트 내부에서 자체적으로 처리하는 것이 원칙입니다. */}
+      <div className="w-full"><Location /></div>
+      
+      <KakaoButton />
     </div>
   );
 }
