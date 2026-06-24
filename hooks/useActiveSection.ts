@@ -1,27 +1,34 @@
-import { useState, useEffect } from 'react';
+"use client";
+
+import { useState, useEffect } from "react";
 
 export function useActiveSection(sectionIds: string[]) {
-  const [activeSection, setActiveSection] = useState<string>('');
+  const [activeSection, setActiveSection] = useState<string>(sectionIds[0]);
 
   useEffect(() => {
-    const observers = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          // 섹션이 50% 이상 화면에 보일 때 활성화
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-            setActiveSection(entry.target.id);
+    const handleScroll = () => {
+      // 1. 현재 스크롤 위치 (Navbar 높이만큼 더해줌)
+      const scrollPosition = window.scrollY + 100;
+
+      for (const id of sectionIds) {
+        const element = document.getElementById(id);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+
+          // 2. 현재 스크롤이 해당 섹션 범위 안에 있는지 확인
+          if (
+            scrollPosition >= offsetTop &&
+            scrollPosition < offsetTop + offsetHeight
+          ) {
+            setActiveSection(id);
+            break; // 찾았으면 바로 종료
           }
-        });
-      },
-      { threshold: 0.5 } // 50% 기준
-    );
+        }
+      }
+    };
 
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observers.observe(el);
-    });
-
-    return () => observers.disconnect();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [sectionIds]);
 
   return activeSection;
