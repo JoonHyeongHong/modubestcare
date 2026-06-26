@@ -61,7 +61,7 @@ export default async function PortfolioDetail({ params }: { params: Promise<{ sl
           <div className="relative w-full aspect-video rounded-2xl overflow-hidden mb-12">
             <Image 
               src={post.featuredImage.node.sourceUrl} 
-              alt={post.title} 
+              alt={post.featuredImage.node.sourceUrl} 
               fill 
               className="object-cover" 
             />
