@@ -40,7 +40,7 @@ export default function Portfolio({ portfolios }: PortfolioProps) {
             <div className="w-full aspect-video bg-slate-100 relative overflow-hidden flex-shrink-0">
               {item.featuredImage ? (
                 <Image 
-                  src={item.featuredImage.node.sourceUrl.replace('http://modu.local', process.env.NEXT_PUBLIC_WORDPRESS_API_URL ?? '')} 
+                  src={item.featuredImage.node.sourceUrl.replace('https://modu.local', process.env.NEXT_PUBLIC_WORDPRESS_API_URL ||  "https://b845-121-173-24-219.ngrok-free.app/graphql")} 
                   alt={item.title} 
                   fill 
                   sizes="(max-w-768px) 100vw, (max-w-1200px) 50vw, 33vw"
