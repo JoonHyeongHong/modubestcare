@@ -16,10 +16,11 @@ export default function B2BHero() {
       {/* 1. 유튜브 배경 영상 */}
       <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-0 bg-slate-900">
         <iframe
+          // ⚡ 유튜브 URL은 https:// 로 참조하고 있습니다. 코드 자체의 문제는 아닙니다.
           src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&loop=1&playlist=tjOr-MBFc-k&controls=0&modestbranding=1&playsinline=1&disablekb=1"
           className="absolute top-1/2 left-1/2 w-[200vw] h-[200vh] sm:w-[150vw] sm:h-[150vh] -translate-x-1/2 -translate-y-1/2 opacity-70"
           allow="autoplay; encrypted-media"
-          title="모두홈케어 B2B 세척 공정"
+          title="모두베스트케어 B2B 세척 공정"
         ></iframe>
       </div>
 
