@@ -2,66 +2,55 @@
 
 import { useState } from "react";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
-import emailjs from "@emailjs/browser";
 
-interface B2BFormData {
-  name: string;
-  phone: string;
-  location: string;
-  acType: string;
-  quantity: number;
-  message: string;
-}
-
-export default function B2BContact() {
-  const [formData, setFormData] = useState<B2BFormData>({
+export default function ContactForm() {
+  const { ref, className } = useScrollFadeIn();
+  const [formData, setFormData] = useState({
+    company: "",
     name: "",
     phone: "",
-    location: "",
-    acType: "천장형 4Way",
-    quantity: 1,
-    message: "",
+    address: "",
+    quantity: "",
+    details: "",
   });
-
-  const [step, setStep] = useState<1 | 2>(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const { ref, className } = useScrollFadeIn();
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleNextStep = () => {
-    if (
-      !formData.name.trim() ||
-      !formData.phone.trim() ||
-      !formData.location.trim()
-    ) {
-      alert("필수 연락처 정보를 모두 입력해 주세요.");
-      return;
-    }
-    setStep(2);
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
     try {
-      await emailjs.send(
-        "service_syw6mbo",
-        "template_p7hdikx",
-        { ...formData, type: "B2B 견적 문의" },
-        "ck_pHQrlkrtV1lJT4",
-      );
-      setIsSuccess(true);
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.ok) {
+        alert(
+          "견적 문의가 정상적으로 접수되었습니다. 신속하게 연락드리겠습니다!",
+        );
+        setFormData({
+          company: "",
+          name: "",
+          phone: "",
+          address: "",
+          quantity: "",
+          details: "",
+        });
+      } else {
+        alert("접수 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+      }
     } catch (error) {
-      alert("전송 실패: 잠시 후 다시 시도해주세요.");
+      console.error(error);
+      alert("서버 연결에 실패했습니다.");
     } finally {
       setIsSubmitting(false);
     }
@@ -71,204 +60,127 @@ export default function B2BContact() {
     <section
       id="contact"
       ref={ref}
-      className={`w-full bg-[#0F172A] py-16 md:py-24 box-border scroll-mt-20 ${className}`}
+      // ⚡ 전체 배경을 완전한 화이트(bg-white)로 변경
+      className={`w-full bg-white py-16 lg:py-20 xl:py-24 md:snap-start box-border border-t border-slate-100 ${className}`}
     >
-      <div className="w-full max-w-2xl mx-auto px-6 flex flex-col justify-center">
-        <div className="text-center mb-10 md:mb-12">
-          <span className="text-xs md:text-sm font-bold px-4 py-1.5 rounded-full tracking-wide bg-sky-500/10 text-sky-400 border border-sky-500/20">
-            B2B CONTACT US
-          </span>
-          <h2 className="text-2xl md:text-4xl font-black text-white mt-5 tracking-tight">
-            지금 바로 <span className="text-sky-400">맞춤 견적</span>을
-            받아보세요
+      <div className="w-full max-w-4xl mx-auto px-5 sm:px-6">
+        {/* 상단 타이틀 */}
+        <div className="text-center mb-10 xl:mb-14">
+          <h2 className="text-2xl lg:text-3xl xl:text-5xl font-black text-slate-900 tracking-tight">
+            간편 견적 신청
           </h2>
+          <p className="text-slate-500 mt-3 text-sm xl:text-lg break-keep font-medium">
+            정보를 남겨주시면 전문가가 맞춤형 세척 견적안을 확인해 드립니다.
+          </p>
         </div>
 
-        <div className="bg-white/5 backdrop-blur-md p-6 md:p-10 rounded-3xl shadow-2xl border border-white/10 relative overflow-hidden min-h-[420px] flex flex-col">
-          {/* 진행률 표시기 */}
-          <div className="flex items-center gap-3 mb-8">
-            <div
-              className={`h-2 flex-1 rounded-full transition-colors duration-500 ${step >= 1 ? "bg-sky-500" : "bg-slate-700"}`}
-            />
-            <div
-              className={`h-2 flex-1 rounded-full transition-colors duration-500 ${step >= 2 ? "bg-sky-500" : "bg-slate-700"}`}
-            />
-          </div>
-
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="font-bold text-lg md:text-xl text-sky-400">
-              {step === 1 ? "1. 담당자 정보 입력" : "2. 견적 상세 정보"}
-            </h3>
-            <span className="text-sm font-bold text-slate-500">{step} / 2</span>
-          </div>
-
-          <form
-            onSubmit={handleSubmit}
-            className="flex-1 flex flex-col justify-between"
-          >
-            {step === 1 && (
-              <div className="space-y-5 animate-in fade-in slide-in-from-right-4 duration-500 flex-1">
-                <div>
-                  <label className="block text-sm font-bold text-slate-300 mb-1.5 ml-1">
-                    기업명 또는 담당자명 *
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3.5 bg-slate-800/50 border border-slate-700 text-white rounded-xl focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-all placeholder:text-slate-500"
-                    placeholder="예: 홍길동 대리 / (주)모두홈케어"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-slate-300 mb-1.5 ml-1">
-                    연락처 *
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3.5 bg-slate-800/50 border border-slate-700 text-white rounded-xl focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-all placeholder:text-slate-500"
-                    placeholder="010-0000-0000"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-slate-300 mb-1.5 ml-1">
-                    현장 지역 *
-                  </label>
-                  <input
-                    type="text"
-                    name="location"
-                    value={formData.location}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3.5 bg-slate-800/50 border border-slate-700 text-white rounded-xl focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-all placeholder:text-slate-500"
-                    placeholder="예: 인천 서구 청라동"
-                  />
-                </div>
-                <div className="pt-4">
-                  <button
-                    type="button"
-                    onClick={handleNextStep}
-                    className="w-full py-4 rounded-xl text-white font-extrabold text-base tracking-wide shadow-lg shadow-sky-900/50 bg-sky-500 hover:bg-sky-600 transition-all active:scale-[0.98]"
-                  >
-                    다음 단계로 ➔
-                  </button>
-                </div>
+        {/* 폼 카드 컨테이너 (배경이 흰색이므로 폼 컨테이너에 미세한 그림자와 테두리를 주어 입체감 부여) */}
+        <div className="bg-white p-6 sm:p-10 rounded-2xl md:rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* 회사/기관명 */}
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-bold text-slate-700">
+                  업체명
+                </label>
+                <input
+                  type="text"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleChange}
+                  placeholder="예:모두홈케어"
+                  // ⚡ 배경이 하얗기 때문에 인풋 박스는 bg-slate-50으로 설정해 시인성 확보
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:bg-white focus:border-[#1E3A8A] focus:ring-1 focus:ring-[#1E3A8A] text-slate-900 text-sm font-medium transition-all"
+                  required
+                />
               </div>
-            )}
 
-            {step === 2 && (
-              <div className="space-y-5 animate-in fade-in slide-in-from-right-4 duration-500 flex-1">
-                <div className="flex gap-4">
-                  <div className="flex-1">
-                    <label className="block text-sm font-bold text-slate-300 mb-1.5 ml-1">
-                      주요 기종
-                    </label>
-                    <select
-                      name="acType"
-                      value={formData.acType}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3.5 bg-slate-800/50 border border-slate-700 text-white rounded-xl focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-all"
-                    >
-                      <option value="천장형 4Way">천장형 4Way</option>
-                      <option value="천장형 1Way">천장형 1Way</option>
-                      <option value="스탠드형">스탠드형</option>
-                      <option value="벽걸이형">벽걸이형</option>
-                      <option value="혼합(내용에 기재)">여러 기종 혼합</option>
-                    </select>
-                  </div>
-                  <div className="w-24">
-                    <label className="block text-sm font-bold text-slate-300 mb-1.5 ml-1">
-                      대수
-                    </label>
-                    <input
-                      type="number"
-                      name="quantity"
-                      min="1"
-                      value={formData.quantity}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3.5 bg-slate-800/50 border border-slate-700 text-white rounded-xl text-center focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-all"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-slate-300 mb-1.5 ml-1">
-                    상세 문의 내용 (선택)
-                  </label>
-                  <textarea
-                    name="message"
-                    rows={4}
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3.5 bg-slate-800/50 border border-slate-700 text-white rounded-xl resize-none focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-all placeholder:text-slate-500"
-                    placeholder="예) 층고가 4m 이상입니다, 주말 야간 작업만 가능합니다 등"
-                  />
-                </div>
-                <div className="pt-4 flex gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setStep(1)}
-                    className="w-1/3 py-4 rounded-xl text-slate-300 font-bold bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-all active:scale-[0.98]"
-                  >
-                    이전
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className={`w-2/3 py-4 rounded-xl text-white font-extrabold tracking-wide shadow-lg transition-all active:scale-[0.98] ${isSubmitting ? "bg-slate-600 cursor-not-allowed shadow-none" : "bg-sky-500 hover:bg-sky-600 shadow-sky-900/50"}`}
-                  >
-                    {isSubmitting ? "전송 중..." : "견적 요청하기"}
-                  </button>
-                </div>
+              {/* 담당자명 */}
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-bold text-slate-700">
+                  담당자 이름
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="예:홍길동"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:bg-white focus:border-[#1E3A8A] focus:ring-1 focus:ring-[#1E3A8A] text-slate-900 text-sm font-medium transition-all"
+                  required
+                />
               </div>
-            )}
 
-            {isSuccess && (
-              <div className="absolute inset-0 bg-[#0F172A]/95 backdrop-blur-md z-20 flex flex-col items-center justify-center p-6 text-center animate-in fade-in duration-300">
-                <div className="w-16 h-16 bg-sky-500/20 text-sky-400 rounded-full flex items-center justify-center mb-4 border border-sky-500/30">
-                  <svg
-                    className="w-8 h-8"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={3}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                </div>
-                <h4 className="text-xl font-bold text-white mb-2">
-                  견적 요청 완료
-                </h4>
-                <p className="text-slate-400 text-sm mb-8 whitespace-pre-line leading-relaxed">
-                  견적 요청이 성공적으로 접수되었습니다.
-                  <br />
-                  B2B 전담 매니저가 확인 후 연락드리겠습니다.
-                </p>
-                <button
-                  onClick={() => {
-                    setIsSuccess(false);
-                    setStep(1);
-                    setFormData({
-                      name: "",
-                      phone: "",
-                      location: "",
-                      acType: "천장형 4Way",
-                      quantity: 1,
-                      message: "",
-                    });
-                  }}
-                  className="px-8 py-3.5 bg-white text-[#0F172A] rounded-xl font-bold hover:bg-slate-200 transition-all"
-                >
-                  확인했습니다
-                </button>
+              {/* 연락처 */}
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-bold text-slate-700">
+                  연락처
+                </label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="숫자만 입력 (예: 01012345678)"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:bg-white focus:border-[#1E3A8A] focus:ring-1 focus:ring-[#1E3A8A] text-slate-900 text-sm font-medium transition-all"
+                  required
+                />
               </div>
-            )}
+
+              {/* 이메일 */}
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-bold text-slate-700">주소</label>
+                <input
+                  type="address"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  placeholder="예: 서울특별시 강남구 테헤란로 123"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:bg-white focus:border-[#1E3A8A] focus:ring-1 focus:ring-[#1E3A8A] text-slate-900 text-sm font-medium transition-all"
+                  required
+                />
+              </div>
+            </div>
+
+            {/* 예상 세척 수량 */}
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-bold text-slate-700">
+                예상 세척 수량 (대수)
+              </label>
+              <input
+                type="text"
+                name="quantity"
+                value={formData.quantity}
+                onChange={handleChange}
+                placeholder="예: 천장형 40대, 벽걸이 10대"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:bg-white focus:border-[#1E3A8A] focus:ring-1 focus:ring-[#1E3A8A] text-slate-900 text-sm font-medium transition-all"
+              />
+            </div>
+
+            {/* 상세 문의 내용 */}
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-bold text-slate-700">
+                상세 요청사항
+              </label>
+              <textarea
+                name="details"
+                value={formData.details}
+                onChange={handleChange}
+                rows={4}
+                placeholder="세척이 필요한 가전 종류, 희망 일정, 주차 가능 여부 등을 자유롭게 적어주세요."
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:bg-white focus:border-[#1E3A8A] focus:ring-1 focus:ring-[#1E3A8A] text-slate-900 text-sm font-medium transition-all resize-none leading-relaxed"
+                required
+              ></textarea>
+            </div>
+
+            {/* 제출 버튼 */}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full py-4 mt-2 bg-[#1E3A8A] hover:bg-[#172554] text-white font-black rounded-xl shadow-lg shadow-[#1E3A8A]/20 hover:scale-[1.01] active:scale-[0.99] transition-all text-center text-base tracking-wide disabled:bg-slate-300 disabled:scale-100 disabled:shadow-none disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? "제출 중..." : "무료 맞춤 견적 신청하기"}
+            </button>
           </form>
         </div>
       </div>

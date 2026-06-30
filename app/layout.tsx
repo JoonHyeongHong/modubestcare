@@ -59,7 +59,6 @@ export default function RootLayout({
         className={`${notoSansKr.className} overflow-x-hidden w-full antialiased bg-white text-gray-900 flex flex-col min-h-screen`}
       >
         {/* 모든 페이지 상단에 고정되는 공통 네비게이션 바 */}
-        <Navbar />
 
         {/* 
           ⚡ 수정 포인트: 기존에 있던 pt-16을 제거했습니다. 

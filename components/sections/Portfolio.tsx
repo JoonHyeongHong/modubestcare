@@ -41,7 +41,7 @@ export default function Portfolio({ portfolios }: PortfolioProps) {
               {item.featuredImage ? (
                 <Image 
                   src={item.featuredImage.node.sourceUrl} 
-                  alt={item.featuredImage.node.sourceUrl} 
+                  alt={item.title} 
                   fill 
                   sizes="(max-w-768px) 100vw, (max-w-1200px) 50vw, 33vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out" 
