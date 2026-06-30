@@ -28,7 +28,7 @@ export default function WhyUs() {
       id="why-us"
       ref={ref}
       // 🎨 이전 섹션(Hero)이 #F8FAFC(연한 회색)였으므로, 여기는 완전한 화이트(bg-white)로 교차 배치하면 화면이 지루하지 않습니다.
-      className={`w-full bg-white py-12 sm:py-16 lg:py-20 xl:py-24 box-border ${className} md:snap-start`}
+      className={`w-full  bg-white py-12 sm:py-16 lg:py-20 xl:py-24 box-border ${className} md:snap-start`}
     >
       <div className="w-full max-w-7xl mx-auto px-5 sm:px-6 flex flex-col justify-center">
         <div className="text-center mb-8 sm:mb-12 xl:mb-16">

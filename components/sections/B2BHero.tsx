@@ -1,6 +1,7 @@
 "use client";
 
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
+import Link from "next/link";
 
 export default function B2BHero() {
   const { ref, className } = useScrollFadeIn();
@@ -46,14 +47,14 @@ export default function B2BHero() {
       </div>
 
       {/* 마우스 애니메이션 아이콘 (버튼과 겹치지 않게 바닥에 고정) */}
-      <a
+      <Link
         href="#why-us"
         className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center animate-bounce"
       >
         <div className="w-6 h-10 border-2 border-white/40 rounded-full flex justify-center pt-2">
           <div className="w-1 h-1.5 bg-white/80 rounded-full"></div>
         </div>
-      </a>
+      </Link>
     </section>
   );
 }

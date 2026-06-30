@@ -56,7 +56,7 @@ export default function SideScrollNav() {
   const isDarkBg = activeSection === "hero";
 
   return (
-    <div className="hidden lg:flex fixed left-6 top-1/2 -translate-y-1/2 z-50 flex-col gap-5">
+    <div className="hidden xl:flex fixed left-6 top-1/2 -translate-y-1/2 z-50 flex-col gap-5">
       {sections.map((section) => {
         const isActive = activeSection === section.id;
 

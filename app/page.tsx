@@ -20,7 +20,7 @@ export default async function Home() {
   return (
     <div className="relative w-full">
       <Navbar />
-      <SideScrollNav />
+
       <B2BMain />
     </div>
   );
