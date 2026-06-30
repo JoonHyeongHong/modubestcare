@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
 export default function Location() {
   // 실제 사무실/교육장 주소 및 지도 주소 매핑
-  const JIDO_URL = "https://map.naver.com/p/search/%EC%A0%9C%EC%9D%B4%ED%83%80%EC%9B%8C3%EC%B0%A8/place/1596732302?placePath=%3Fbk_query%3D%25EC%25A0%259C%25EC%259D%25B4%25ED%2583%2580%25EC%259B%258C3%25EC%25B0%25A8%26entry%3Dpll%26from%3Dnx%26fromNxList%3Dtrue&placeSearchOption=bk_query%3D%25EC%25A0%259C%25EC%259D%25B4%25ED%2583%2580%25EC%259B%258C3%25EC%25B0%25A8%26entry%3Dpll%26fromNxList%3Dtrue%26originalQuery%3D%25EC%25A0%259C%25EC%259D%25B4%25ED%2583%2580%25EC%259B%258C3%25EC%25B0%25A8%26x%3D126.704529%26y%3D37.514823&searchType=place"; // 네이버 지도 공유 링크 주소 넣는 곳
+  const JIDO_URL =
+    "https://map.naver.com/p/search/%EC%A0%9C%EC%9D%B4%ED%83%80%EC%9B%8C3%EC%B0%A8/place/1596732302?placePath=%3Fbk_query%3D%25EC%25A0%259C%25EC%259D%25B4%25ED%2583%2580%25EC%259B%258C3%25EC%25B0%25A8%26entry%3Dpll%26from%3Dnx%26fromNxList%3Dtrue&placeSearchOption=bk_query%3D%25EC%25A0%259C%25EC%259D%25B4%25ED%2583%2580%25EC%259B%258C3%25EC%25B0%25A8%26entry%3Dpll%26fromNxList%3Dtrue%26originalQuery%3D%25EC%25A0%259C%25EC%259D%25B4%25ED%2583%2580%25EC%259B%258C3%25EC%25B0%25A8%26x%3D126.704529%26y%3D37.514823&searchType=place"; // 네이버 지도 공유 링크 주소 넣는 곳
 
   return (
-    <section 
-      id="location" 
+    <section
+      id="location"
       className="w-full min-h-screen md:h-screen flex flex-col items-center justify-center bg-white pt-20 pb-10 box-border"
     >
       <div className="max-w-4xl w-full mx-auto px-4 flex flex-col justify-center h-full min-h-0">
-        
         {/* 상단 타이틀 */}
         <div className="text-center mb-6 flex-shrink-0">
           <span className="text-xs font-bold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full">
@@ -20,22 +20,28 @@ export default function Location() {
             모두홈케어 찾아 오시는 길
           </h2>
           <p className="text-gray-500 mt-1 text-xs md:text-sm">
-            소속 기사 이론 교육 및 완전 분해 실습이 이루어지는 교육장 및 사무실입니다.
+            소속 기사 이론 교육 및 완전 분해 실습이 이루어지는 교육장 및
+            사무실입니다.
           </p>
         </div>
 
         {/* 메인 주소 및 시각 레이아웃 박스 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch flex-1 md:flex-none">
-          
           {/* 왼쪽: 가상의 지도 플레이스홀더 (모바일 스크롤 시 지도에 손가락이 갇히는 현상 방지) */}
           <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 flex flex-col items-center justify-center text-center min-h-[200px] relative overflow-hidden group">
-            <div className="absolute inset-0 bg-cover bg-center opacity-40 blur-xs" style={{ backgroundImage: "url('https://placehold.co/600x400/E2E8F0/475569?text=Map+Image')" }}></div>
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-40 blur-xs"
+              style={{
+                backgroundImage:
+                  "url('https://placehold.co/600x400/E2E8F0/475569?text=Map+Image')",
+              }}
+            ></div>
             <div className="relative z-10 space-y-3">
               <span className="text-3xl">📍</span>
               <p className="text-xs md:text-sm text-gray-600 font-bold break-keep">
                 모두홈케어 가전 세척 교육장
               </p>
-              <a 
+              <a
                 href={JIDO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -54,7 +60,6 @@ export default function Location() {
               </h4>
               <p className="text-gray-600 leading-relaxed font-medium">
                 인천광역시 부평대로 337, 4층 422호 <br />
-              
               </p>
             </div>
 
@@ -63,8 +68,14 @@ export default function Location() {
                 <span>🚗</span> 교통 및 주차 안내
               </h4>
               <p className="text-gray-600 leading-relaxed break-keep">
-                <strong className="text-gray-800 font-semibold">[지하철]</strong> 인천 1호선 갈산역 인근 <br />
-                <strong className="text-gray-800 font-semibold">[주차]</strong> 주차 가능
+                <strong className="text-gray-800 font-semibold">
+                  [지하철]
+                </strong>{" "}
+                인천 1호선 갈산역 인근 <br />
+                <strong className="text-gray-800 font-semibold">
+                  [주차]
+                </strong>{" "}
+                주차 가능
               </p>
             </div>
 
@@ -73,14 +84,16 @@ export default function Location() {
                 <span>📞</span> 방문 및 면접 문의
               </h4>
               <p className="text-gray-600 font-medium">
-                전화 번호: <span className="text-gray-900 font-bold">010-0000-0000</span> <br />
-                <span className="text-[11px] text-gray-400 font-normal">* 사전 예약 후 방문 부탁드립니다.</span>
+                전화 번호:{" "}
+                <span className="text-gray-900 font-bold">010-0000-0000</span>{" "}
+                <br />
+                <span className="text-[11px] text-gray-400 font-normal">
+                  * 사전 예약 후 방문 부탁드립니다.
+                </span>
               </p>
             </div>
           </div>
-
         </div>
-
       </div>
     </section>
   );
