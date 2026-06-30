@@ -9,13 +9,6 @@ export default async function PortfolioDetail({
   params: Promise<{ slug: string }>;
 }) {
   // 2. 글이 없을 경우 에러 처리 (404)
-  if (!post) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        게시글을 찾을 수 없습니다.
-      </div>
-    );
-  }
 
   // 3. 상세 페이지 렌더링
   return (
