@@ -59,7 +59,7 @@ export default function RootLayout({
         className={`${notoSansKr.className} overflow-x-hidden w-full antialiased bg-white text-gray-900 flex flex-col min-h-screen`}
       >
         {/* 모든 페이지 상단에 고정되는 공통 네비게이션 바 */}
-
+        <Navbar />
         {/* 
           ⚡ 수정 포인트: 기존에 있던 pt-16을 제거했습니다. 
           이제 최상단 Hero 섹션이 화면의 맨 위(0px)부터 시작하므로, 

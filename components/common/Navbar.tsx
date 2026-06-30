@@ -2,15 +2,21 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 
+const menuConfig = [
+  { name: "홈", id: "" },
+  { name: "서비스 단가", id: "price" },
+  { name: "작업 현황", id: "portfolio" },
+  { name: "문의 게시판", id: "injury" },
+  { name: "자주하는 질문", id: "faq" },
+  { name: "교육생 모집", id: "academy" },
+];
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const router = useRouter();
   const pathname = usePathname();
-
-  // ⚡ 현재 경로가 아카데미 관련 경로인지 확인 (기본값은 false / 필요시 라우팅 구조에 맞춰 수정)
-  const isEduMode = pathname.includes("/academy") || pathname.includes("/edu");
+  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // 스크롤 이벤트 감지
   useEffect(() => {
@@ -26,14 +32,9 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // 아카데미/B2B 모드 전환 핸들러
-  const toggleMode = () => {
-    if (isEduMode) {
-      router.push("/"); // 메인 B2B 페이지로 이동
-    } else {
-      router.push("/academy"); // 아카데미(Edu) 페이지로 이동 (해당 라우트 필요)
-    }
-  };
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   return (
     <nav
@@ -44,15 +45,72 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-6 flex justify-between items-center">
-        {/* 1. 로고 영역 */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <span className="text-xl md:text-2xl font-black tracking-tight ">
-            모두홈케어
-          </span>
-        </Link>
+        <div>
+          {/* 1. 로고 영역 */}
+          <Link href="/" className="flex items-center gap-2 group">
+            <span className="text-xl md:text-2xl font-black tracking-tight ">
+              모두홈케어
+            </span>
+          </Link>
 
-        {/* 2. 우측 컨트롤 영역 (아카데미 토글 + CTA 버튼) */}
+          {/* 2. 우측 컨트롤 영역 (아카데미 토글 + CTA 버튼) */}
+        </div>
+        <div className="hidden md:flex items-cent gap-4 lg:gap-7 text-md lg:text-xl font-medium min-w-0 flex-1 justify-center px-4">
+          {menuConfig.map((menu) => (
+            <Link key={menu.id} href={`${menu.id}`}>
+              {menu.name}
+            </Link>
+          ))}
+        </div>
+        <button
+          onClick={() => setIsOpen(true)}
+          className="p-1 md:hidden text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+          aria-label="메뉴 열기"
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
       </div>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: "50%" }}
+            exit={{ x: "100%" }}
+            className={`bg-white fixed inset-0 z-[110] flex flex-col p-6 md:hidden`}
+          >
+            <button
+              onClick={() => setIsOpen(false)}
+              className="text-bg text-3xl mb-10 hover:bg-white hover:text-black"
+            >
+              ✕
+            </button>
+            <div className="flex flex-col gap-8 text-2xl font-bold text-white">
+              {menuConfig.map((menu) => (
+                <a
+                  key={menu.id}
+                  href={`#${menu.id}`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {menu.name}
+                </a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }
