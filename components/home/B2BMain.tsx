@@ -4,7 +4,6 @@ import B2BHero from "@/components/sections/B2BHero";
 import KeyServices from "@/components/sections/KeyServices"; // 아래에서 새로 만들 컴포넌트
 import BeforeAfterSlider from "@/components/sections/BeforeAfterSlider";
 import WhyUs from "@/components/sections/WhyUs";
-import B2BContact from "@/components/sections/B2BContact"; // 아래에서 새로 만들 컴포넌트
 import FaqAccordion from "../sections/FaqAccordion";
 import ProcessSliders from "../sections/ProcessSliders";
 import SideScrollNav from "../common/SideScrollNav";
@@ -22,7 +21,6 @@ export default function B2BMain() {
       <BeforeAfterSlider />
 
       <FaqAccordion />
-      <B2BContact />
     </main>
   );
 }
