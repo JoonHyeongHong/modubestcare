@@ -3,19 +3,17 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
 
-const menuConfig = [
-  { name: "홈", id: "/" },
-  { name: "서비스 단가", id: "/price" },
-  { name: "작업 현황", id: "/review" },
-  { name: "문의 게시판", id: "/inquiry" },
-  { name: "자주 묻는 질문", id: "/faq" },
-  { name: "교육생 모집", id: "academy" },
-];
-export default function Navbar() {
+export default function Navbar({
+  isOpen,
+  setIsOpen,
+  menuConfig,
+}: {
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+  menuConfig: { name: string; id: string }[];
+}) {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   // 스크롤 이벤트 감지
@@ -82,35 +80,6 @@ export default function Navbar() {
           </svg>
         </button>
       </div>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: "50%" }}
-            exit={{ x: "100%" }}
-            className={`bg-white fixed inset-0 z-[110] flex flex-col p-6 md:hidden`}
-          >
-            <button
-              onClick={() => setIsOpen(false)}
-              className="text-bg text-3xl mb-10 hover:bg-white hover:text-black"
-            >
-              ✕
-            </button>
-            <div className="flex flex-col gap-8 text-2xl font-bold text-white">
-              {menuConfig.map((menu) => (
-                <Link
-                  key={menu.id}
-                  href={`#${menu.id}`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {menu.name}
-                </Link>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </nav>
   );
 }

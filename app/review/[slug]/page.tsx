@@ -2,8 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { fetchAPI } from "@/lib/api";
 import PageHeader from "@/components/common/PageHeader";
-import Navbar from "@/components/common/Navbar";
-
+import Header from "@/components/common/Header";
 // ⚡ 특정 slug를 가진 단일 포스트만 가져오는 GraphQL 쿼리
 const GET_SINGLE_PORTFOLIO = `
   query GetSinglePortfolio($id: ID!) {
@@ -41,7 +40,7 @@ export default async function PortfolioDetail({
   if (!post) {
     return (
       <main className="min-h-screen bg-white pt-24 pb-16">
-        <Navbar />
+        <Header />
         <PageHeader title="작업 후기" subtitle="Cleaning Service Review" />
         <div className="min-h-screen flex items-center justify-center">
           게시글을 찾을 수 없습니다.
@@ -53,7 +52,7 @@ export default async function PortfolioDetail({
   // 3. 상세 페이지 렌더링
   return (
     <main className="min-h-screen bg-white pb-16">
-      <Navbar />
+      <Header />
       <PageHeader title="작업 후기" subtitle="Cleaning Service Review" />
       <article className="max-w-3xl mx-auto px-6">
         {/* 상단: 뒤로가기 버튼 및 날짜 */}

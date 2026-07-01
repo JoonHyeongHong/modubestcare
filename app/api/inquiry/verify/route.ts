@@ -4,6 +4,13 @@ export async function POST(request: Request) {
   try {
     const { postId, phone } = await request.json();
 
+    let realNumericId = postId;
+    // Base64 글로벌 ID 처리 로직 (기존 유지)
+    if (isNaN(Number(postId))) {
+      const decodedString = Buffer.from(postId, "base64").toString("utf-8");
+      realNumericId = decodedString.split(":")[1];
+    }
+
     // 1. 해당 포스트의 실제 ACF 연락처 정보를 워드프레스 백엔드에서 직접 가져옵니다.
     const token = btoa(
       `user:${process.env.NEXT_PUBLIC_WORDPRESS_API_APPLICATION_PASSWORD}`,
@@ -35,7 +42,7 @@ export async function POST(request: Request) {
     if (clientPhoneStr === serverPhoneStr && serverPhoneStr !== "") {
       return NextResponse.json({
         authenticated: true,
-        content: post.content.rendered,
+        acfData: post.acf,
       });
     } else {
       return NextResponse.json(

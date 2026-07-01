@@ -14,7 +14,7 @@ export default function InquiryBoard({ posts }: { posts: Post[] }) {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [phone, setPhoneNumber] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [postContent, setPostContent] = useState<string | null>(null);
+  const [acfData, setAcfData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   // 모달 열기
@@ -22,13 +22,13 @@ export default function InquiryBoard({ posts }: { posts: Post[] }) {
     setSelectedPost(post);
     setPhoneNumber("");
     setErrorMsg("");
-    setPostContent(null); // 이전 본문 초기화
+    setAcfData(null); // 이전 본문 초기화
   };
 
   // 모달 닫기
   const handleCloseModal = () => {
     setSelectedPost(null);
-    setPostContent(null);
+    setAcfData(null);
   };
 
   // 인증 API 호출
@@ -47,7 +47,7 @@ export default function InquiryBoard({ posts }: { posts: Post[] }) {
       const data = await res.json();
 
       if (res.ok && data.authenticated) {
-        setPostContent(data.content); // 성공 시 본문 세팅
+        setAcfData(data.acfData); // 성공 시 본문 세팅
       } else {
         setErrorMsg(data.message || "연락처 정보가 일치하지 않습니다.");
       }
@@ -96,7 +96,7 @@ export default function InquiryBoard({ posts }: { posts: Post[] }) {
             </button>
 
             <div className="p-6 sm:p-8">
-              {!postContent ? (
+              {!acfData ? (
                 /* 인증 폼 영역 */
                 <form onSubmit={handleVerify} className="flex flex-col gap-4">
                   <div className="text-center mb-4">
@@ -136,15 +136,82 @@ export default function InquiryBoard({ posts }: { posts: Post[] }) {
                 </form>
               ) : (
                 /* 인증 성공 시 본문 표시 영역 */
-                <div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-4 pb-4 border-b border-gray-200">
-                    {selectedPost.title}
-                  </h3>
-                  <div
-                    className="prose prose-sm sm:prose-base text-gray-700"
-                    // 워드프레스에서 가져온 HTML 본문을 안전하게 렌더링
-                    dangerouslySetInnerHTML={{ __html: postContent }}
-                  />
+                <div className="animate-fade-in text-left">
+                  {/* 헤더 영역 */}
+                  <div className="mb-6">
+                    <span className="inline-block px-2.5 py-1 text-xs font-semibold text-blue-600 bg-blue-50 rounded-md mb-2">
+                      견적문의 내역
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-bold text-slate-800">
+                      {selectedPost.title}
+                    </h3>
+                  </div>
+
+                  {/* 상세 내역 테이블/카드 형태 폼 디자인 */}
+                  <div className="bg-slate-50 border border-slate-100 rounded-xl p-5 space-y-4">
+                    <div className="grid grid-cols-3 border-b border-slate-200/60 pb-3">
+                      <span className="text-sm font-medium text-slate-400">
+                        업체/기관명
+                      </span>
+                      <span className="col-span-2 text-sm font-semibold text-slate-800">
+                        {acfData.company_name || acfData.companyName || "-"}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-3 border-b border-slate-200/60 pb-3">
+                      <span className="text-sm font-medium text-slate-400">
+                        담당자
+                      </span>
+                      <span className="col-span-2 text-sm font-semibold text-slate-800">
+                        {acfData.client_name || acfData.clientName || "-"}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-3 border-b border-slate-200/60 pb-3">
+                      <span className="text-sm font-medium text-slate-400">
+                        연락처
+                      </span>
+                      <span className="col-span-2 text-sm font-semibold text-slate-800 text-blue-600 font-mono">
+                        {acfData.phone || "-"}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-3 border-b border-slate-200/60 pb-3">
+                      <span className="text-sm font-medium text-slate-400">
+                        주소
+                      </span>
+                      <span className="col-span-2 text-sm font-semibold text-slate-800">
+                        {acfData.address || "-"}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-3 border-b border-slate-200/60 pb-3">
+                      <span className="text-sm font-medium text-slate-400">
+                        예상 수량
+                      </span>
+                      <span className="col-span-2 text-sm font-semibold text-slate-800">
+                        {acfData.quantity || "-"}
+                      </span>
+                    </div>
+
+                    {/* 상세 내용 영역 */}
+                    <div className="flex flex-col pt-1">
+                      <span className="text-sm font-medium text-slate-400 mb-2">
+                        상세 내용
+                      </span>
+                      <div className="text-sm text-slate-700 bg-white border border-slate-200/80 rounded-lg p-3 min-h-[80px] whitespace-pre-wrap leading-relaxed">
+                        {acfData.details || "내용이 없습니다."}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 하단 닫기 버튼 */}
+                  <button
+                    onClick={handleCloseModal}
+                    className="w-full py-3 mt-6 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-lg transition-colors shadow-sm text-center"
+                  >
+                    확인 완료
+                  </button>
                 </div>
               )}
             </div>
