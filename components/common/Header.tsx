@@ -9,10 +9,9 @@ export default function Header() {
   const menuConfig = [
     { name: "홈", id: "/" },
     { name: "서비스 단가", id: "/price" },
-    { name: "작업 현황", id: "/review" },
+    { name: "작업 후기", id: "/review" },
     { name: "문의 게시판", id: "/inquiry" },
     { name: "자주 묻는 질문", id: "/faq" },
-    { name: "교육생 모집", id: "academy" },
   ];
 
   return (

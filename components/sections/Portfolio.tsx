@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { PortfolioNode } from "@/app/page";
+import { PortfolioNode } from "@/app/review/page";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 interface PortfolioProps {
@@ -36,7 +36,7 @@ export default function Portfolio({ portfolios }: PortfolioProps) {
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-slate-400 font-medium text-sm">
-                  시공 이미지 준비 중
+                  이미지 등록이 되지 않았습니다
                 </div>
               )}
             </div>
@@ -45,10 +45,10 @@ export default function Portfolio({ portfolios }: PortfolioProps) {
               <div>
                 <div className="flex flex-wrap gap-2 mb-3">
                   <span className="px-2.5 py-0.5 text-[11px] font-bold text-blue-600 bg-blue-50 rounded-md tracking-tight">
-                    LG 시스템 에어컨
+                    {item.acfPortfolios.category || "시스템에어컨"}
                   </span>
                   <span className="px-2.5 py-0.5 text-[11px] font-bold text-slate-600 bg-slate-100 rounded-md tracking-tight">
-                    인천 서구
+                    {item.acfPortfolios.workLocation || "인천 서구"}
                   </span>
                 </div>
                 <h3 className="font-bold text-[16px] md:text-lg text-slate-800 line-clamp-1 group-hover:text-blue-600 transition-colors duration-200">

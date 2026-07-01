@@ -1,16 +1,22 @@
 import PageHeader from "@/components/common/PageHeader";
-import B2BHero from "@/components/sections/B2BHero";
 import Portfolio from "@/components/sections/Portfolio";
 import { fetchAPI } from "@/lib/api";
 
 export interface PortfolioNode {
   slug: string;
   title: string;
+  date: Date;
   content: string;
   featuredImage?: {
     node: {
       sourceUrl: string;
     };
+  };
+  acfPortfolios: {
+    category: string;
+    workDate: Date;
+    workerName: string;
+    workLocation: string;
   };
 }
 
@@ -31,6 +37,7 @@ const query = `
         category
         workDate
         workerName
+        workLocation
       }
     }    
   }
