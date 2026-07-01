@@ -172,7 +172,7 @@ export default function QuoteCalculator() {
                 {/* 하단 유도 버튼 (옵션) */}
                 <div className="mt-6 xl:mt-8 pt-4">
                   <a
-                    href="#contact"
+                    href="/inquiry"
                     className="flex items-center justify-center w-full py-4 xl:py-5 bg-b2b-accent hover:brightness-110 text-white rounded-xl font-bold text-sm xl:text-base transition-all shadow-lg shadow-b2b-accent/20 active:scale-95"
                   >
                     문의하러 가기

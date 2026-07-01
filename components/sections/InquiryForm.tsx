@@ -1,13 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
-export default function ContactForm() {
+export default function InquiryForm() {
   const { ref, className } = useScrollFadeIn();
+  // ⚡ 추가: 라우터 초기화
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
-    company: "",
-    name: "",
+    companyName: "",
+    clientName: "",
     phone: "",
     address: "",
     quantity: "",
@@ -27,7 +31,7 @@ export default function ContactForm() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch("/api/inquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -38,13 +42,17 @@ export default function ContactForm() {
           "견적 문의가 정상적으로 접수되었습니다. 신속하게 연락드리겠습니다!",
         );
         setFormData({
-          company: "",
-          name: "",
+          companyName: "",
+          clientName: "",
           phone: "",
           address: "",
           quantity: "",
           details: "",
         });
+
+        // ⚡ 추가: 제출 성공 시 현재 페이지의 데이터를 즉시 다시 불러옵니다.
+        // 이렇게 하면 하단 문의 게시판 컴포넌트에 방금 쓴 글이 실시간으로 뜹니다.
+        router.refresh();
       } else {
         alert("접수 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
       }
@@ -67,7 +75,7 @@ export default function ContactForm() {
         {/* 상단 타이틀 */}
         <div className="text-center mb-10 xl:mb-14">
           <h2 className="text-2xl lg:text-3xl xl:text-5xl font-black text-slate-900 tracking-tight">
-            간편 견적 신청
+            간편 문의
           </h2>
           <p className="text-slate-500 mt-3 text-sm xl:text-lg break-keep font-medium">
             정보를 남겨주시면 전문가가 맞춤형 세척 견적안을 확인해 드립니다.
@@ -85,8 +93,8 @@ export default function ContactForm() {
                 </label>
                 <input
                   type="text"
-                  name="company"
-                  value={formData.company}
+                  name="companyName"
+                  value={formData.companyName}
                   onChange={handleChange}
                   placeholder="예:모두홈케어"
                   // ⚡ 배경이 하얗기 때문에 인풋 박스는 bg-slate-50으로 설정해 시인성 확보
@@ -102,8 +110,8 @@ export default function ContactForm() {
                 </label>
                 <input
                   type="text"
-                  name="name"
-                  value={formData.name}
+                  name="clientName"
+                  value={formData.clientName}
                   onChange={handleChange}
                   placeholder="예:홍길동"
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:bg-white focus:border-[#1E3A8A] focus:ring-1 focus:ring-[#1E3A8A] text-slate-900 text-sm font-medium transition-all"
