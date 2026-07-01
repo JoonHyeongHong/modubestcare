@@ -35,7 +35,7 @@ export default function B2BHero() {
           <span className="text-xl sm:text-3xl md:text-4xl text-slate-200 font-bold drop-shadow-md">
             깨끗한 공기, 숨쉬는 공간
           </span>
-          <span className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold">
+          <span className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white">
             모두홈케어
           </span>
         </h1>
