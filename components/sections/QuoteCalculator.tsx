@@ -4,10 +4,10 @@ import { useState } from "react";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const PRICING = {
-  wall: { name: "벽걸이형", price: 120000 },
-  stand: { name: "스탠드형", price: 180000 },
-  way1: { name: "천장형 1Way", price: 150000 },
-  way4: { name: "천장형 4Way", price: 180000 },
+  wall: { name: "벽걸이형", price: 131000 },
+  stand: { name: "스탠드형", price: 198000 },
+  way1: { name: "천장형 1Way", price: 158000 },
+  way4: { name: "천장형 4Way", price: 198000 },
 };
 
 type AcType = keyof typeof PRICING;
@@ -55,7 +55,7 @@ export default function QuoteCalculator() {
         <div className="text-center mb-10 lg:mb-12 xl:mb-16">
           {/* ⚡ B2B 테마 컬러 및 반응형 폰트 사이즈 적용 */}
           <h2 className="text-2xl lg:text-3xl xl:text-5xl font-black text-b2b-primary leading-tight tracking-tight">
-            실시간 B2B 예상 견적
+            실시간 예상 견적
           </h2>
           <p className="text-slate-500 mt-3 xl:mt-5 text-sm xl:text-lg break-keep font-medium">
             10대 이상 단체 의뢰 시 수량별 자동 할인이 적용됩니다.
@@ -175,7 +175,7 @@ export default function QuoteCalculator() {
                     href="#contact"
                     className="flex items-center justify-center w-full py-4 xl:py-5 bg-b2b-accent hover:brightness-110 text-white rounded-xl font-bold text-sm xl:text-base transition-all shadow-lg shadow-b2b-accent/20 active:scale-95"
                   >
-                    이 견적으로 문의하기
+                    문의하러 가기
                   </a>
                 </div>
               </div>

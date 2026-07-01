@@ -7,7 +7,7 @@ import WhyUs from "@/components/sections/WhyUs";
 import FaqAccordion from "../sections/FaqAccordion";
 import ProcessSliders from "../sections/ProcessSliders";
 import SideScrollNav from "../common/SideScrollNav";
-
+import QuoteCalculator from "../sections/QuoteCalculator";
 export default function B2BMain() {
   return (
     <main className="w-full bg-slate-900 scroll-smooth snap-y">
@@ -21,6 +21,7 @@ export default function B2BMain() {
       <BeforeAfterSlider />
 
       <FaqAccordion />
+      <QuoteCalculator />
     </main>
   );
 }

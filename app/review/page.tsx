@@ -1,3 +1,4 @@
+import PageHeader from "@/components/common/PageHeader";
 import B2BHero from "@/components/sections/B2BHero";
 import Portfolio from "@/components/sections/Portfolio";
 import { fetchAPI } from "@/lib/api";
@@ -41,7 +42,7 @@ export default async function Home() {
   const portfoliosList = res.posts.nodes;
   return (
     <div className="relative w-full">
-      <B2BHero />
+      <PageHeader title="작업 후기" subtitle="Cleaning Service Review" />
       <Portfolio portfolios={portfoliosList} />
     </div>
   );

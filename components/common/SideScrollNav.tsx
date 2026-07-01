@@ -7,9 +7,9 @@ const sections = [
   { id: "why-us", label: "차이점" },
   { id: "process", label: "세척 과정" },
   { id: "services", label: "주요 서비스" },
-  { id: "before-after", label: "세척 전후" },
+  { id: "before-after", label: "세척 전후 비교" },
   { id: "faq", label: "자주 묻는 질문" },
-  { id: "contact", label: "견적 문의" },
+  { id: "calculator", label: "견적 계산기" },
 ];
 
 export default function SideScrollNav() {

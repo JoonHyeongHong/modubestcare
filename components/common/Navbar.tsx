@@ -6,10 +6,10 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 
 const menuConfig = [
-  { name: "홈", id: "" },
+  { name: "홈", id: "/" },
   { name: "서비스 단가", id: "price" },
-  { name: "작업 현황", id: "portfolio" },
-  { name: "문의 게시판", id: "injury" },
+  { name: "작업 현황", id: "review" },
+  { name: "문의 게시판", id: "inquiry" },
   { name: "자주하는 질문", id: "faq" },
   { name: "교육생 모집", id: "academy" },
 ];
@@ -48,14 +48,14 @@ export default function Navbar() {
         <div>
           {/* 1. 로고 영역 */}
           <Link href="/" className="flex items-center gap-2 group">
-            <span className="text-xl md:text-2xl font-black tracking-tight ">
+            <span className="text-2xl font-black tracking-tight ">
               모두홈케어
             </span>
           </Link>
 
           {/* 2. 우측 컨트롤 영역 (아카데미 토글 + CTA 버튼) */}
         </div>
-        <div className="hidden md:flex items-cent gap-4 lg:gap-7 text-md lg:text-xl font-medium min-w-0 flex-1 justify-center px-4">
+        <div className="hidden md:flex items-cent gap-4 lg:gap-7 text-md font-medium min-w-0 flex-1 justify-center px-4">
           {menuConfig.map((menu) => (
             <Link key={menu.id} href={`${menu.id}`}>
               {menu.name}
