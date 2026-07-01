@@ -7,10 +7,10 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const menuConfig = [
   { name: "홈", id: "/" },
-  { name: "서비스 단가", id: "price" },
-  { name: "작업 현황", id: "review" },
-  { name: "문의 게시판", id: "inquiry" },
-  { name: "자주하는 질문", id: "faq" },
+  { name: "서비스 단가", id: "/price" },
+  { name: "작업 현황", id: "/review" },
+  { name: "문의 게시판", id: "/inquiry" },
+  { name: "자주 묻는 질문", id: "/faq" },
   { name: "교육생 모집", id: "academy" },
 ];
 export default function Navbar() {
@@ -99,13 +99,13 @@ export default function Navbar() {
             </button>
             <div className="flex flex-col gap-8 text-2xl font-bold text-white">
               {menuConfig.map((menu) => (
-                <a
+                <Link
                   key={menu.id}
                   href={`#${menu.id}`}
                   onClick={() => setIsOpen(false)}
                 >
                   {menu.name}
-                </a>
+                </Link>
               ))}
             </div>
           </motion.div>
